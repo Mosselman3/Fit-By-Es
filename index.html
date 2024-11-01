@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://live.staticflickr.com https://images.unsplash.com data:; connect-src 'self';">
+    <title>FitByEs</title>
+  </head>
+  <body>
+    <!-- Hidden form for Netlify -->
+    <form name="Contact Form" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="service-type" />
+      <input type="text" name="gender" />
+      <input type="text" name="age-range" />
+      <input type="text" name="goals" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="availability" />
+    </form>
+    
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
