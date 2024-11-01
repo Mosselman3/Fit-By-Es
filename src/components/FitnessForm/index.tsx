@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 import { QuestionCard } from './QuestionCard';
 import { ArrowLeft, ArrowRight, Send } from 'lucide-react';
+
+interface ContactInfo {
+  name: string;
+  email: string;
+  phone: string;
+  availability: string;
+}
 
 interface Question {
   id: number;
@@ -69,8 +78,8 @@ const questions: Question[] = [
 
 export function FitnessForm() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, any>>({});
-  const [errors, setErrors] = useState<Record<string, string | Record<string, string>>>({});
+  const [answers, setAnswers] = useState<Record<number, string | ContactInfo>>({});
+  const [errors, setErrors] = useState<Record<number | 'contact', string | Record<string, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -95,35 +104,46 @@ export function FitnessForm() {
 
   const handleAnswer = (answer: string) => {
     const error = validateAnswer(currentQ.id, answer);
-    setErrors(prev => ({ ...prev, [currentQ.id]: error }));
-    setAnswers(prev => ({ ...prev, [currentQ.id]: answer }));
+    setErrors((prev: Record<number | 'contact', string | Record<string, string>>) => ({ 
+      ...prev, 
+      [currentQ.id]: error 
+    }));
+    setAnswers((prev: Record<number, string | ContactInfo>) => ({ 
+      ...prev, 
+      [currentQ.id]: answer 
+    }));
 
     if (currentQ.type === 'radio' && !error) {
       if (currentQ.id === 1 && answer === 'pregnancy') {
-        setAnswers(prev => ({ ...prev, 2: 'female' }));
+        setAnswers((prev: Record<number, string | ContactInfo>) => ({ 
+          ...prev, 
+          2: 'female' 
+        }));
         setCurrentQuestion(2);
       } else if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(prev => prev + 1);
+        setCurrentQuestion((prev: number) => prev + 1);
       }
     }
   };
 
-  const handleContactInfo = (field: string, value: string) => {
+  const handleContactInfo = (field: keyof ContactInfo, value: string) => {
     let error = '';
     if (!value) {
       error = 'This field is required';
-    } else if (field === 'email' && !/\S+@\S+\.\S+/.test(value)) {
+    } else if (field === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       error = 'Please enter a valid email address';
+    } else if (field === 'phone' && !/^\+?[\d\s-()]+$/.test(value)) {
+      error = 'Please enter a valid phone number';
     }
 
-    setErrors(prev => ({
+    setErrors((prev: Record<number | 'contact', string | Record<string, string>>) => ({
       ...prev,
-      contact: { ...(prev.contact as Record<string, string>), [field]: error }
+      contact: { ...(prev.contact as Record<string, string> || {}), [field]: error }
     }));
 
-    setAnswers(prev => ({
+    setAnswers((prev: Record<number, string | ContactInfo>) => ({
       ...prev,
-      contact: { ...prev.contact, [field]: value }
+      contact: { ...(prev.contact as ContactInfo || {}), [field]: value }
     }));
   };
 
@@ -146,30 +166,37 @@ export function FitnessForm() {
     setIsSubmitting(true);
 
     try {
-      const formData = new FormData();
-      formData.append('form-name', 'Contact Form');
-      formData.append('service-type', answers[1] || '');
-      formData.append('gender', answers[2] || '');
-      formData.append('age-range', answers[3] || '');
-      formData.append('goals', answers[4] || '');
-      
-      if (answers.contact) {
-        formData.append('name', answers.contact.name || '');
-        formData.append('email', answers.contact.email || '');
-        formData.append('phone', answers.contact.phone || '');
-        formData.append('availability', answers.contact.availability || '');
-      }
+      const contact = answers.contact as ContactInfo;
+      const formValues = {
+        'form-name': 'Contact Form',
+        'service-type': answers[1]?.toString() || '',
+        'gender': answers[2]?.toString() || '',
+        'age-range': answers[3]?.toString() || '',
+        'goals': answers[4]?.toString() || '',
+        'name': contact?.name || '',
+        'email': contact?.email || '',
+        'phone': contact?.phone || '',
+        'availability': contact?.availability || ''
+      };
 
-      await fetch("/", {
+      const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData as any).toString()
+        body: new URLSearchParams(formValues).toString()
       });
+
+      if (!response.ok) {
+        throw new Error('Form submission failed');
+      }
       
       setIsSubmitted(true);
       setAnswers({});
     } catch (error) {
       console.error("Form submission error:", error);
+      setErrors(prev => ({
+        ...prev,
+        submit: 'Failed to submit form. Please try again.'
+      }));
     } finally {
       setIsSubmitting(false);
     }
@@ -200,71 +227,85 @@ export function FitnessForm() {
   }
 
   return (
-    <form 
-      method="post"
-      name="Contact Form"
-      data-netlify="true"
-      className="w-full max-w-2xl mx-auto"
-      onSubmit={handleSubmit}
-    >
-      <input type="hidden" name="form-name" value="Contact Form" />
-      
-      <Progress value={progress} isContact={isContactForm} className="mb-8" />
-      
-      <div className="space-y-8">
-        <QuestionCard
-          question={currentQ}
-          answer={currentQ.type === 'contact' ? answers.contact : answers[currentQ.id]}
-          error={currentQ.type === 'contact' ? errors.contact : errors[currentQ.id]}
-          onAnswer={handleAnswer}
-          onContactInfoChange={currentQ.type === 'contact' ? handleContactInfo : undefined}
-        />
+    <>
+      <form name="Contact Form" data-netlify="true" hidden>
+        <input type="hidden" name="form-name" value="Contact Form" />
+        <input type="text" name="service-type" />
+        <input type="text" name="gender" />
+        <input type="text" name="age-range" />
+        <input type="text" name="goals" />
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="tel" name="phone" />
+        <input type="text" name="availability" />
+      </form>
 
-        <div className="flex justify-between items-center pt-6 px-4 sm:px-6">
-          {currentQuestion > 0 ? (
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handlePrevious}
-              className="h-12 text-primary border-primary hover:bg-primary/10 min-w-[120px]"
-            >
-              <div className="flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" />
-                <span className="font-medium">Back</span>
-              </div>
-            </Button>
-          ) : (
-            <div />
-          )}
-          
-          {currentQuestion === questions.length - 1 ? (
-            <Button 
-              type="submit" 
-              className="h-12 bg-primary hover:bg-primary-dark text-white min-w-[120px]"
-              disabled={!isContactValid() || isSubmitting}
-            >
-              <div className="flex items-center gap-2">
-                <span className="font-medium">{isSubmitting ? 'Submitting...' : 'Submit'}</span>
-                <Send className="w-4 h-4" />
-              </div>
-            </Button>
-          ) : (
-            currentQ.type !== 'radio' && (
+      <form 
+        method="POST"
+        name="Contact Form"
+        data-netlify="true"
+        className="w-full max-w-2xl mx-auto"
+        onSubmit={handleSubmit}
+      >
+        <input type="hidden" name="form-name" value="Contact Form" />
+        
+        <Progress value={progress} isContact={isContactForm} className="mb-8" />
+        
+        <div className="space-y-8">
+          <QuestionCard
+            question={currentQ}
+            answer={currentQ.type === 'contact' ? answers.contact : answers[currentQ.id]}
+            error={currentQ.type === 'contact' ? errors.contact : errors[currentQ.id]}
+            onAnswer={handleAnswer}
+            onContactInfoChange={currentQ.type === 'contact' ? handleContactInfo : undefined}
+          />
+
+          <div className="flex justify-between items-center pt-6 px-4 sm:px-6">
+            {currentQuestion > 0 ? (
               <Button
                 type="button"
-                disabled={!canProceed()}
-                className="h-12 bg-primary hover:bg-primary-dark text-white min-w-[120px]"
-                onClick={handleNext}
+                variant="outline"
+                onClick={handlePrevious}
+                className="h-12 text-primary border-primary hover:bg-primary/10 min-w-[120px]"
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-medium">Next</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowLeft className="w-4 h-4" />
+                  <span className="font-medium">Back</span>
                 </div>
               </Button>
-            )
-          )}
+            ) : (
+              <div />
+            )}
+            
+            {currentQuestion === questions.length - 1 ? (
+              <Button 
+                type="submit" 
+                className="h-12 bg-primary hover:bg-primary-dark text-white min-w-[120px]"
+                disabled={!isContactValid() || isSubmitting}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{isSubmitting ? 'Submitting...' : 'Submit'}</span>
+                  <Send className="w-4 h-4" />
+                </div>
+              </Button>
+            ) : (
+              currentQ.type !== 'radio' && (
+                <Button
+                  type="button"
+                  disabled={!canProceed()}
+                  className="h-12 bg-primary hover:bg-primary-dark text-white min-w-[120px]"
+                  onClick={handleNext}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Next</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </Button>
+              )
+            )}
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }

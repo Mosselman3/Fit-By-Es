@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+
 import { Input } from '../ui/input';
 import { PhoneInput } from './PhoneInput';
 
@@ -37,7 +38,6 @@ export function ContactInfo({ values, errors, onChange }: ContactInfoProps) {
       type: 'text'
     },
   ];
-
   return (
     <div className="space-y-5">
       {fields.map((field) => (
