@@ -217,11 +217,15 @@ export function FitnessForm() {
         'availability': contact?.availability || ''
       };
 
+      console.log('Submitting form values:', formValues);
+
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formValues).toString()
       });
+
+      console.log('Form submission response:', response);
 
       if (!response.ok) {
         throw new Error('Form submission failed');
