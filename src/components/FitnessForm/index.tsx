@@ -144,18 +144,25 @@ export function FitnessForm() {
     setErrors((prev) => ({ ...prev, [currentQ.id]: error }));
     setAnswers((prev) => ({ ...prev, [currentQ.id]: answer }));
 
+    console.log('Current Question ID:', currentQ.id);
+    console.log('Selected Answer:', answer);
+
     if (currentQ.type === 'radio' && !error) {
       if (currentQ.id === 1) {
         if (answer === 'pregnancy') {
           setAnswers((prev) => ({ ...prev, 2: 'female' }));
           setCurrentQuestion(2);
         } else if (answer === 'sports') {
-          setCurrentQuestion(questions.findIndex(q => q.id === 6));
+          const nextQuestionIndex = questions.findIndex(q => q.id === 6);
+          console.log('Sports selected, next question index:', nextQuestionIndex);
+          setCurrentQuestion(nextQuestionIndex);
         } else {
           setCurrentQuestion((prev) => prev + 1);
         }
       } else if (currentQ.id === 6 || currentQ.id === 7) {
-        setCurrentQuestion(questions.findIndex(q => q.id === 2));
+        const genderQuestionIndex = questions.findIndex(q => q.id === 2);
+        console.log('After sports questions, moving to index:', genderQuestionIndex);
+        setCurrentQuestion(genderQuestionIndex);
       } else if (currentQuestion < questions.length - 1) {
         setCurrentQuestion((prev) => prev + 1);
       }
