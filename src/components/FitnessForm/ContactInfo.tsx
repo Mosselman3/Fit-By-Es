@@ -8,7 +8,6 @@ interface ContactInfoProps {
     name?: string;
     email?: string;
     phone?: string;
-    availability?: string;
   };
   errors?: Record<string, string>;
   onChange: (field: string, value: string) => void;
@@ -29,14 +28,7 @@ export function ContactInfo({ values, errors, onChange }: ContactInfoProps) {
       icon: '📧',
       placeholder: 'Email address',
       type: 'email'
-    },
-    {
-      name: 'availability',
-      id: 'contact-availability',
-      icon: '📅',
-      placeholder: 'When are you available?',
-      type: 'text'
-    },
+    }
   ];
   return (
     <div className="space-y-5">

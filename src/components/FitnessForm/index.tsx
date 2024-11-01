@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
@@ -26,6 +27,20 @@ interface Question {
   }>;
 }
 
+interface ProgressProps {
+  value: number;
+  isContact?: boolean;
+  className?: string;
+}
+
+interface QuestionCardProps {
+  question: Question;
+  answer: string | ContactInfo | undefined;
+  error: string | Record<string, string> | undefined;
+  onAnswer: (answer: string) => void;
+  onContactInfoChange?: (field: keyof ContactInfo, value: string) => void;
+}
+
 const questions: Question[] = [
   {
     id: 1,
@@ -34,9 +49,31 @@ const questions: Question[] = [
     required: true,
     options: [
       { value: 'weight-muscle', label: 'Weight Loss & Build Muscle', icon: '💪' },
-      { value: 'lifestyle', label: 'Healthy Lifestyle', icon: '🌱' },
       { value: 'sports', label: 'Sports Competition Coaching', icon: '🏆' },
-      { value: 'pregnancy', label: 'Post Pregnancy Recovery', icon: '👶' }
+      { value: 'pregnancy', label: 'Pregnancy Recovery', icon: '👶' }
+    ]
+  },
+  {
+    id: 6,
+    text: 'The type of sport event you train for?',
+    type: 'radio',
+    required: true,
+    options: [
+      { value: 'swimming', label: 'Swimming', icon: '🏊‍♂️' },
+      { value: 'running', label: 'Running', icon: '🏃‍♂️' },
+      { value: 'cycling', label: 'Cycling', icon: '🚴‍♂️' },
+      { value: 'triathlon', label: 'Triathlon', icon: '🏅' }
+    ]
+  },
+  {
+    id: 7,
+    text: 'What is your goal?',
+    type: 'radio',
+    required: true,
+    options: [
+      { value: 'total-time', label: 'Total Time Goal', icon: '⏱️' },
+      { value: 'time-pace', label: 'Time Pace Goal', icon: '⚡' },
+      { value: 'distance', label: 'Distance Goal', icon: '📏' }
     ]
   },
   {
@@ -104,24 +141,30 @@ export function FitnessForm() {
 
   const handleAnswer = (answer: string) => {
     const error = validateAnswer(currentQ.id, answer);
-    setErrors((prev: Record<number | 'contact', string | Record<string, string>>) => ({ 
-      ...prev, 
-      [currentQ.id]: error 
-    }));
-    setAnswers((prev: Record<number, string | ContactInfo>) => ({ 
-      ...prev, 
-      [currentQ.id]: answer 
-    }));
+    setErrors((prev) => ({ ...prev, [currentQ.id]: error }));
+    setAnswers((prev) => ({ ...prev, [currentQ.id]: answer }));
+
+    console.log('Current Question ID:', currentQ.id);
+    console.log('Selected Answer:', answer);
 
     if (currentQ.type === 'radio' && !error) {
-      if (currentQ.id === 1 && answer === 'pregnancy') {
-        setAnswers((prev: Record<number, string | ContactInfo>) => ({ 
-          ...prev, 
-          2: 'female' 
-        }));
-        setCurrentQuestion(2);
+      if (currentQ.id === 1) {
+        if (answer === 'pregnancy') {
+          setAnswers((prev) => ({ ...prev, 2: 'female' }));
+          setCurrentQuestion(2);
+        } else if (answer === 'sports') {
+          const nextQuestionIndex = questions.findIndex(q => q.id === 6);
+          console.log('Sports selected, next question index:', nextQuestionIndex);
+          setCurrentQuestion(nextQuestionIndex);
+        } else {
+          setCurrentQuestion((prev) => prev + 1);
+        }
+      } else if (currentQ.id === 6 || currentQ.id === 7) {
+        const genderQuestionIndex = questions.findIndex(q => q.id === 2);
+        console.log('After sports questions, moving to index:', genderQuestionIndex);
+        setCurrentQuestion(genderQuestionIndex);
       } else if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion((prev: number) => prev + 1);
+        setCurrentQuestion((prev) => prev + 1);
       }
     }
   };
@@ -136,12 +179,12 @@ export function FitnessForm() {
       error = 'Please enter a valid phone number';
     }
 
-    setErrors((prev: Record<number | 'contact', string | Record<string, string>>) => ({
+    setErrors((prev) => ({
       ...prev,
       contact: { ...(prev.contact as Record<string, string> || {}), [field]: error }
     }));
 
-    setAnswers((prev: Record<number, string | ContactInfo>) => ({
+    setAnswers((prev) => ({
       ...prev,
       contact: { ...(prev.contact as ContactInfo || {}), [field]: value }
     }));
@@ -170,6 +213,8 @@ export function FitnessForm() {
       const formValues = {
         'form-name': 'Contact Form',
         'service-type': answers[1]?.toString() || '',
+        'sports-event': answers[6]?.toString() || '',
+        'sports-goal': answers[7]?.toString() || '',
         'gender': answers[2]?.toString() || '',
         'age-range': answers[3]?.toString() || '',
         'goals': answers[4]?.toString() || '',
@@ -179,11 +224,15 @@ export function FitnessForm() {
         'availability': contact?.availability || ''
       };
 
+      console.log('Submitting form values:', formValues);
+
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formValues).toString()
       });
+
+      console.log('Form submission response:', response);
 
       if (!response.ok) {
         throw new Error('Form submission failed');
@@ -231,6 +280,8 @@ export function FitnessForm() {
       <form name="Contact Form" data-netlify="true" hidden>
         <input type="hidden" name="form-name" value="Contact Form" />
         <input type="text" name="service-type" />
+        <input type="text" name="sports-event" />
+        <input type="text" name="sports-goal" />
         <input type="text" name="gender" />
         <input type="text" name="age-range" />
         <input type="text" name="goals" />
