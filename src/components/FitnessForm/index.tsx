@@ -106,9 +106,7 @@ export function FitnessForm() {
         } else {
           setCurrentQuestion((prev: number) => prev + 1);
         }
-      } else if (currentQ.id === 6) {
-        setCurrentQuestion((prev: number) => prev + 1);
-      } else if (currentQuestion < questions.length - 1) {
+      } else {
         setCurrentQuestion((prev: number) => prev + 1);
       }
     }
@@ -270,7 +268,7 @@ export function FitnessForm() {
     },
     {
       id: 4,
-      text: 'Tell me about your specific goals and motivation?',
+      text: 'How would you describe your current level of fitness and exercise experience?\nDescribe your ideal fitness level and what it would mean to you to achieve it.\nWhat obstacles or challenges have prevented you from reaching your fitness goals in the past? Anything else you would like to share...',
       type: 'text',
       required: true,
       minLength: 10
