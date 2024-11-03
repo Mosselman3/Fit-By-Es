@@ -39,11 +39,11 @@ export function ContactInfo({ values, errors, onChange }: ContactInfoProps) {
               {field.icon}
             </div>
             <Input
-              type={field.type}
               id={field.id}
               name={field.name}
+              type={field.type}
               value={values[field.name as keyof typeof values] || ''}
-              onChange={(e) => onChange(field.name, e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(field.name, e.target.value)}
               className="pl-12 h-12 text-base text-gray-800"
               placeholder={field.placeholder}
               autoComplete={field.type === 'email' ? 'email' : field.name === 'name' ? 'name' : 'off'}

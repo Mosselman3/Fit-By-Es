@@ -41,84 +41,32 @@ interface QuestionCardProps {
   onContactInfoChange?: (field: keyof ContactInfo, value: string) => void;
 }
 
-const questions: Question[] = [
-  {
-    id: 1,
-    text: 'How can I help?',
-    type: 'radio',
-    required: true,
-    options: [
-      { value: 'weight-muscle', label: 'Weight Loss & Build Muscle', icon: '💪' },
-      { value: 'sports', label: 'Sports Competition Coaching', icon: '🏆' },
-      { value: 'pregnancy', label: 'Pregnancy Recovery', icon: '👶' }
-    ]
-  },
-  {
-    id: 6,
-    text: 'The type of sport event you train for?',
-    type: 'radio',
-    required: true,
-    options: [
-      { value: 'swimming', label: 'Swimming', icon: '🏊‍♂️' },
-      { value: 'running', label: 'Running', icon: '🏃‍♂️' },
-      { value: 'cycling', label: 'Cycling', icon: '🚴‍♂️' },
-      { value: 'triathlon', label: 'Triathlon', icon: '🏅' }
-    ]
-  },
-  {
-    id: 7,
-    text: 'What is your goal?',
-    type: 'radio',
-    required: true,
-    options: [
-      { value: 'total-time', label: 'Total Time Goal', icon: '⏱️' },
-      { value: 'time-pace', label: 'Time Pace Goal', icon: '⚡' },
-      { value: 'distance', label: 'Distance Goal', icon: '📏' }
-    ]
-  },
-  {
-    id: 2,
-    text: 'Your Gender?',
-    type: 'radio',
-    required: true,
-    options: [
-      { value: 'male', label: 'Male', icon: '👨' },
-      { value: 'female', label: 'Female', icon: '👩' }
-    ]
-  },
-  {
-    id: 3,
-    text: 'Your Age?',
-    type: 'radio',
-    required: true,
-    options: [
-      { value: '18-24', label: '18-24' },
-      { value: '25-30', label: '25-30' },
-      { value: '31-40', label: '31-40' },
-      { value: '41+', label: '41+' }
-    ]
-  },
-  {
-    id: 4,
-    text: 'Tell me about your specific goals and motivation?',
-    type: 'text',
-    required: true,
-    minLength: 10
-  },
-  {
-    id: 5,
-    text: 'Schedule Your Free Fitness Assessment',
-    type: 'contact',
-    required: true
-  }
-];
+// Type for the answers state
+type AnswerType = Record<number, string | ContactInfo>;
+// Type for the errors state
+type ErrorType = Record<number | 'contact', string | Record<string, string>>;
 
 export function FitnessForm() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, string | ContactInfo>>({});
-  const [errors, setErrors] = useState<Record<number | 'contact', string | Record<string, string>>>({});
+  const [answers, setAnswers] = useState<AnswerType>({});
+  const [errors, setErrors] = useState<ErrorType>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const questionsList: Question[] = [
+    {
+      id: 1,
+      text: "What's your primary fitness goal?",
+      type: "radio",
+      required: true,
+      options: [
+        { value: "weight-loss", label: "Weight Loss" },
+        { value: "muscle-gain", label: "Muscle Gain" },
+        { value: "pregnancy", label: "Pre/Post Pregnancy" },
+        { value: "sports", label: "Sports Performance" }
+      ]
+    }
+    // Add other questions here
+  ];
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
   const currentQ = questions[currentQuestion];
@@ -141,8 +89,8 @@ export function FitnessForm() {
 
   const handleAnswer = (answer: string) => {
     const error = validateAnswer(currentQ.id, answer);
-    setErrors((prev) => ({ ...prev, [currentQ.id]: error }));
-    setAnswers((prev) => ({ ...prev, [currentQ.id]: answer }));
+    setErrors((prev: ErrorType) => ({ ...prev, [currentQ.id]: error }));
+    setAnswers((prev: AnswerType) => ({ ...prev, [currentQ.id]: answer }));
 
     console.log('Current Question ID:', currentQ.id);
     console.log('Selected Answer:', answer);
@@ -150,21 +98,18 @@ export function FitnessForm() {
     if (currentQ.type === 'radio' && !error) {
       if (currentQ.id === 1) {
         if (answer === 'pregnancy') {
-          setAnswers((prev) => ({ ...prev, 2: 'female' }));
+          setAnswers((prev: AnswerType) => ({ ...prev, 2: 'female' }));
           setCurrentQuestion(2);
         } else if (answer === 'sports') {
           const nextQuestionIndex = questions.findIndex(q => q.id === 6);
-          console.log('Sports selected, next question index:', nextQuestionIndex);
           setCurrentQuestion(nextQuestionIndex);
         } else {
-          setCurrentQuestion((prev) => prev + 1);
+          setCurrentQuestion((prev: number) => prev + 1);
         }
-      } else if (currentQ.id === 6 || currentQ.id === 7) {
-        const genderQuestionIndex = questions.findIndex(q => q.id === 2);
-        console.log('After sports questions, moving to index:', genderQuestionIndex);
-        setCurrentQuestion(genderQuestionIndex);
+      } else if (currentQ.id === 6) {
+        setCurrentQuestion((prev: number) => prev + 1);
       } else if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion((prev) => prev + 1);
+        setCurrentQuestion((prev: number) => prev + 1);
       }
     }
   };
@@ -179,20 +124,20 @@ export function FitnessForm() {
       error = 'Please enter a valid phone number';
     }
 
-    setErrors((prev) => ({
+    setErrors((prev: ErrorType) => ({
       ...prev,
       contact: { ...(prev.contact as Record<string, string> || {}), [field]: error }
     }));
 
-    setAnswers((prev) => ({
+    setAnswers((prev: AnswerType) => ({
       ...prev,
-      contact: { ...(prev.contact as ContactInfo || {}), [field]: value }
+      contact: { ...(prev.contact || {} as ContactInfo), [field]: value }
     }));
   };
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(prev => prev + 1);
+      setCurrentQuestion((prev: number) => prev + 1);
     }
   };
 
@@ -200,7 +145,7 @@ export function FitnessForm() {
     if (currentQuestion === 2 && answers[1] === 'pregnancy') {
       setCurrentQuestion(1);
     } else {
-      setCurrentQuestion(prev => Math.max(0, prev - 1));
+      setCurrentQuestion((prev: number) => Math.max(0, prev - 1));
     }
   };
 
@@ -242,7 +187,7 @@ export function FitnessForm() {
       setAnswers({});
     } catch (error) {
       console.error("Form submission error:", error);
-      setErrors(prev => ({
+      setErrors((prev: ErrorType) => ({
         ...prev,
         submit: 'Failed to submit form. Please try again.'
       }));
@@ -263,6 +208,80 @@ export function FitnessForm() {
     if (currentQ.type === 'contact') return isContactValid();
     return !!answers[currentQ.id] && !errors[currentQ.id];
   };
+
+  const questions: Question[] = [
+    {
+      id: 1,
+      text: 'How can I help?',
+      type: 'radio',
+      required: true,
+      options: [
+        { value: 'weight-muscle', label: 'Weight Loss & Build Muscle', icon: '💪' },
+        { value: 'sports', label: 'Sports Competition Coaching', icon: '🏆' },
+        { value: 'pregnancy', label: 'Pregnancy Recovery', icon: '👶' }
+      ]
+    },
+    ...(answers[1] === 'sports' ? [
+      {
+        id: 6,
+        text: 'The type of sport event you train for?',
+        type: 'radio' as const,
+        required: true,
+        options: [
+          { value: 'swimming', label: 'Swimming', icon: '🏊‍♂️' },
+          { value: 'running', label: 'Running', icon: '🏃‍♂️' },
+          { value: 'cycling', label: 'Cycling', icon: '🚴‍♂️' },
+          { value: 'triathlon', label: 'Triathlon', icon: '🏅' }
+        ]
+      },
+      {
+        id: 7,
+        text: 'What is your goal?',
+        type: 'radio' as const,
+        required: true,
+        options: [
+          { value: 'total-time', label: 'Total Time Goal', icon: '⏱️' },
+          { value: 'time-pace', label: 'Time Pace Goal', icon: '⚡' },
+          { value: 'distance', label: 'Distance Goal', icon: '📏' }
+        ]
+      }
+    ] : []),
+    {
+      id: 2,
+      text: 'Your Gender?',
+      type: 'radio' as const,
+      required: true,
+      options: [
+        { value: 'male', label: 'Male', icon: '👨' },
+        { value: 'female', label: 'Female', icon: '👩' }
+      ]
+    },
+    {
+      id: 3,
+      text: 'Your Age?',
+      type: 'radio',
+      required: true,
+      options: [
+        { value: '18-24', label: '18-24' },
+        { value: '25-30', label: '25-30' },
+        { value: '31-40', label: '31-40' },
+        { value: '41+', label: '41+' }
+      ]
+    },
+    {
+      id: 4,
+      text: 'Tell me about your specific goals and motivation?',
+      type: 'text',
+      required: true,
+      minLength: 10
+    },
+    {
+      id: 5,
+      text: 'Schedule Your Free Fitness Assessment',
+      type: 'contact',
+      required: true
+    }
+  ];
 
   if (!currentQ) return null;
 
@@ -304,11 +323,19 @@ export function FitnessForm() {
         
         <div className="space-y-8">
           <QuestionCard
-            question={currentQ}
+            question={{
+              ...currentQ,
+              options: currentQ.options?.map(opt => ({
+                ...opt,
+                icon: opt.icon as "phone" | "male" | "female" | "dumbbell" | "heart" | "trophy" | "baby" | "calendar" | "mail" | "user" | "arrowLeft" | "arrowRight" | "send" | "loader" | "checkCircle" | undefined
+              }))
+            }}
             answer={currentQ.type === 'contact' ? answers.contact : answers[currentQ.id]}
             error={currentQ.type === 'contact' ? errors.contact : errors[currentQ.id]}
             onAnswer={handleAnswer}
-            onContactInfoChange={currentQ.type === 'contact' ? handleContactInfo : undefined}
+            onContactInfoChange={currentQ.type === 'contact' ? 
+              ((field: string, value: string) => handleContactInfo(field as keyof ContactInfo, value)) : 
+              undefined}
           />
 
           <div className="flex justify-between items-center pt-6 px-4 sm:px-6">
