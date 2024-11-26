@@ -8,9 +8,10 @@ declare global {
 
 interface CalendlyWidgetProps {
   isVisible: boolean;
+  onClose?: () => void;
 }
 
-const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible }) => {
+const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible, onClose }) => {
   useEffect(() => {
     // Load Calendly CSS
     const link = document.createElement('link');
@@ -24,13 +25,6 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible }) => {
     script.async = true;
     document.body.appendChild(script);
 
-    script.onload = () => {
-      if (window.Calendly && isVisible) {
-        window.Calendly.showPopupWidget('https://calendly.com/sebastiaan-mosselman/fintess');
-      }
-    };
-
-    // Cleanup function
     return () => {
       if (link.parentNode) {
         link.parentNode.removeChild(link);
@@ -39,10 +33,28 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible }) => {
         script.parentNode.removeChild(script);
       }
     };
-  }, [isVisible]);
+  }, []);
 
-  // No need for container div since we're using popup
-  return null;
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/sebastiaan-mosselman/fintess'
+      });
+    }
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <a
+      href="#"
+      onClick={handleClick}
+      className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors inline-block"
+    >
+      Schedule Free Intake
+    </a>
+  );
 };
 
 export default CalendlyWidget;

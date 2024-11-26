@@ -294,31 +294,14 @@ export function FitnessForm() {
       <div className="text-center p-8 bg-white rounded-lg shadow-md">
         <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
         <p className="text-gray-700 mb-6">Your fitness assessment request has been submitted successfully.</p>
-        <button
-          onClick={() => setShowCalendly(true)}
-          className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
-        >
-          Schedule Your Free Intake Now
-        </button>
-        <CalendlyWidget isVisible={showCalendly} />
+        <CalendlyWidget isVisible={true} />
       </div>
     );
   }
 
   return (
     <>
-      <form 
-        method="POST"
-        name="Contact Form"
-        data-netlify="true"
-        className="w-full max-w-2xl mx-auto"
-        onSubmit={handleSubmit}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-          }
-        }}
-      >
+      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
         <input type="hidden" name="form-name" value="Contact Form" />
         
         <Progress value={progress} isContact={isContactForm} />
