@@ -4,9 +4,9 @@ const Hero = () => {
   return (
     <section className="bg-gradient-to-r from-primary to-primary-dark text-white relative">
       <div className="container mx-auto px-4">
-        <div className="min-h-[600px] relative flex flex-col lg:block">
+        <div className="min-h-[800px] relative flex flex-col lg:block">
           {/* Text Content */}
-          <div className="lg:w-1/2 space-y-8 pt-20 relative z-10">
+          <div className="lg:w-1/2 space-y-8 pt-24 lg:pt-40 relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold leading-tight">
               Transform Your Life with Personal Training
             </h1>
@@ -20,8 +20,8 @@ const Hero = () => {
           </div>
           
           {/* Image Container */}
-          <div className="w-full lg:w-1/2 lg:absolute lg:bottom-0 lg:right-0 mt-8 lg:mt-0">
-            <div className="w-full max-w-md mx-auto lg:ml-auto lg:mr-0">
+          <div className="w-full lg:w-[45%] lg:absolute lg:bottom-0 lg:right-8 mt-12 lg:mt-0">
+            <div className="w-full max-w-lg mx-auto lg:ml-auto">
               <img
                 src="/images/trainer-profile.png"
                 alt="Estrella Wierikx - Personal Trainer"

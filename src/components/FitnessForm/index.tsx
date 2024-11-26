@@ -339,31 +339,31 @@ export function FitnessForm() {
               undefined}
           />
 
-          <div className="flex justify-between items-center pt-6 px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 pt-6 px-4 sm:px-6">
             {currentQuestion > 0 ? (
               <Button
                 type="button"
                 onClick={handlePrevious}
                 variant="outline" 
-                className="h-12 text-primary border-primary hover:bg-primary/10 min-w-[120px]"
+                className="h-12 text-primary border-primary hover:bg-primary/10 w-full sm:w-auto min-w-[120px]"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2">
                   <ArrowLeft className="w-4 h-4" />
                   <span className="font-medium">Back</span>
                 </div>
               </Button>
             ) : (
-              <div />
+              <div className="hidden sm:block" />
             )}
             
             {currentQuestion < questions.length - 1 ? (
               <Button
                 variant="button"
                 disabled={!canProceed()}
-                className="h-12 bg-primary hover:bg-primary-dark text-white min-w-[120px]"
+                className="h-12 bg-primary hover:bg-primary-dark text-white w-full sm:w-auto min-w-[120px]"
                 onClick={handleNext}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2">
                   <span className="font-medium">Next</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
@@ -373,10 +373,10 @@ export function FitnessForm() {
             {currentQuestion === questions.length - 1 ? (
               <Button 
                 variant="submit"
-                className="h-12 bg-primary hover:bg-primary-dark text-white min-w-[120px]"
+                className="h-12 bg-primary hover:bg-primary-dark text-white w-full sm:w-auto min-w-[120px]"
                 disabled={!isContactValid() || isSubmitting}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2">
                   <span className="font-medium">{isSubmitting ? 'Submitting...' : 'Submit'}</span>
                   <Send className="w-4 h-4" />
                 </div>

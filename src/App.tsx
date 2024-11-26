@@ -7,6 +7,7 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import PricingCard from './components/PricingCard';
 import Contact from './components/Contact';
+import ScrollAnimation from './components/ScrollAnimation';
 
 function App() {
   return (
@@ -14,11 +15,21 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <TrainerProfile />
-        <Services />
-        <PricingCard />
-        <Testimonials />
-        <Contact />
+        <ScrollAnimation>
+          <Services />
+        </ScrollAnimation>
+        <ScrollAnimation delay={0.3}>
+          <TrainerProfile />
+        </ScrollAnimation>
+        <ScrollAnimation delay={0.4}>
+          <PricingCard />
+        </ScrollAnimation>
+        <ScrollAnimation delay={0.5}>
+          <Testimonials />
+        </ScrollAnimation>
+        <ScrollAnimation delay={0.6}>
+          <Contact />
+        </ScrollAnimation>
       </main>
       <Footer />
     </div>
