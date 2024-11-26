@@ -261,7 +261,7 @@ export function FitnessForm() {
       }
       
       setIsSubmitted(true);
-      setShowCalendly(true);
+      setShowCalendly(false);
       setAnswers({});
     } catch (error) {
       console.error("Form submission error:", error);
@@ -293,7 +293,13 @@ export function FitnessForm() {
     return (
       <div className="text-center p-8 bg-white rounded-lg shadow-md">
         <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
-        <p className="text-gray-700">Your fitness assessment request has been submitted successfully. We'll contact you soon to schedule your session.</p>
+        <p className="text-gray-700 mb-6">Your fitness assessment request has been submitted successfully.</p>
+        <button
+          onClick={() => setShowCalendly(true)}
+          className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
+        >
+          Schedule Your Free Intake Now
+        </button>
         <CalendlyWidget isVisible={showCalendly} />
       </div>
     );
@@ -301,21 +307,6 @@ export function FitnessForm() {
 
   return (
     <>
-      <form name="Contact Form" data-netlify="true" hidden>
-        <input type="hidden" name="form-name" value="Contact Form" />
-        <input type="text" name="service-type" />
-        <input type="text" name="sports-event" />
-        <input type="text" name="sports-goal" />
-        <input type="text" name="gender" />
-        <input type="text" name="age-range" />
-        <input type="text" name="title" />
-        <input type="text" name="first-name" />
-        <input type="text" name="last-name" />
-        <input type="email" name="email" />
-        <input type="tel" name="phone" />
-        <input type="text" name="message" />
-      </form>
-
       <form 
         method="POST"
         name="Contact Form"

@@ -26,31 +26,23 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible }) => {
 
     script.onload = () => {
       if (window.Calendly && isVisible) {
-        window.Calendly.initInlineWidget({
-          url: 'https://calendly.com/sebastiaan-mosselman/fintess',
-          parentElement: document.getElementById('calendlyContainer'),
-          prefill: {},
-          utm: {}
-        });
+        window.Calendly.showPopupWidget('https://calendly.com/sebastiaan-mosselman/fintess');
       }
     };
 
+    // Cleanup function
     return () => {
-      // Cleanup
-      document.head.removeChild(link);
-      document.body.removeChild(script);
+      if (link.parentNode) {
+        link.parentNode.removeChild(link);
+      }
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
     };
   }, [isVisible]);
 
-  if (!isVisible) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-auto relative">
-        <div id="calendlyContainer" style={{ minHeight: '600px' }} />
-      </div>
-    </div>
-  );
+  // No need for container div since we're using popup
+  return null;
 };
 
 export default CalendlyWidget;
