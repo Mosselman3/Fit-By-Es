@@ -5,6 +5,7 @@ import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 import { QuestionCard } from './QuestionCard';
 import { ArrowLeft, ArrowRight, Send } from 'lucide-react';
+import CalendlyWidget from '../CalendlyWidget';
 
 interface ContactInfo {
   title: string;
@@ -59,6 +60,7 @@ export function FitnessForm() {
   const [errors, setErrors] = useState<ErrorType>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showCalendly, setShowCalendly] = useState(false);
   const questions: Question[] = [
     {
       id: 1,
@@ -259,6 +261,7 @@ export function FitnessForm() {
       }
       
       setIsSubmitted(true);
+      setShowCalendly(true);
       setAnswers({});
     } catch (error) {
       console.error("Form submission error:", error);
@@ -291,6 +294,7 @@ export function FitnessForm() {
       <div className="text-center p-8 bg-white rounded-lg shadow-md">
         <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
         <p className="text-gray-700">Your fitness assessment request has been submitted successfully. We'll contact you soon to schedule your session.</p>
+        <CalendlyWidget isVisible={showCalendly} />
       </div>
     );
   }
@@ -385,6 +389,7 @@ export function FitnessForm() {
           </div>
         </div>
       </form>
+      <CalendlyWidget isVisible={showCalendly} />
     </>
   );
 }

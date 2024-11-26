@@ -25,7 +25,7 @@ const Hero = () => {
               <img
                 src="/images/trainer-profile.png"
                 alt="Estrella Wierikx - Personal Trainer"
-                className="w-full h-auto object-contain transform transition-transform duration-500 hover:scale-105"
+                className="w-full h-auto object-contain"
               />
             </div>
           </div>
