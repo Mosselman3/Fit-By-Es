@@ -92,28 +92,51 @@ export function FitnessForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate contact information
+    const { name, email, phone, availability } = contactInfo;
+    if (!name || !email || !phone || !availability) {
+      alert('Please fill out all contact information fields');
+      return;
+    }
+
+    // Validate other required answers
+    const requiredQuestions = [1, 2, 3, 4]; // Service type, Gender, Age, Goals
+    const missingAnswers = requiredQuestions.filter(
+      questionId => !answers[questionId]
+    );
+
+    if (missingAnswers.length > 0) {
+      alert('Please answer all questions before submitting');
+      return;
+    }
+
     // Handle form submission
-    console.log({ answers, contactInfo });
+    console.log('Form Submission Data:', { answers, contactInfo });
     
     // Ensure Calendly script is loaded
     const waitForCalendly = () => {
       if (window.Calendly) {
+        const prefillData = {
+          email: contactInfo.email,
+          name: contactInfo.name,
+          location: contactInfo.availability,
+          guests: [],
+          date: null,
+          customAnswers: {
+            a1: answers[1] || '', // How can I help?
+            a2: answers[2] || '', // Gender
+            a3: answers[3] || '', // Age
+            a4: answers[4] || '', // Goals and motivation
+            a5: contactInfo.phone || '' // Phone number
+          }
+        };
+
+        console.log('Calendly Prefill Data:', prefillData);
+
         window.Calendly.initPopupWidget({
           url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment',
-          prefill: {
-            email: contactInfo.email,
-            name: contactInfo.name,
-            location: contactInfo.availability,
-            guests: [],
-            date: null,
-            customAnswers: {
-              a1: answers[1] || '', // How can I help?
-              a2: answers[2] || '', // Gender
-              a3: answers[3] || '', // Age
-              a4: answers[4] || '', // Goals and motivation
-              a5: contactInfo.phone || '' // Phone number
-            }
-          }
+          prefill: prefillData
         });
       } else {
         // If Calendly isn't loaded yet, wait and try again
