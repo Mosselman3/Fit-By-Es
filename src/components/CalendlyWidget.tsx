@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -13,37 +13,54 @@ interface CalendlyWidgetProps {
 const CALENDLY_URL = 'https://calendly.com/sebastiaan-mosselman/fitness-assessment';
 
 const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true }) => {
+  const initialized = useRef(false);
+
   useEffect(() => {
-    // Load Calendly CSS
-    const link = document.createElement('link');
-    link.href = 'https://assets.calendly.com/assets/external/widget.css';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
+    if (initialized.current) return;
 
-    // Load Calendly JS
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.type = 'text/javascript';
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      if (link.parentNode) {
-        link.parentNode.removeChild(link);
+    const loadCalendlyScript = () => {
+      // Check if Calendly is already loaded
+      if (window.Calendly) {
+        initialized.current = true;
+        return;
       }
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
+
+      // Load Calendly CSS if not already loaded
+      if (!document.querySelector('link[href*="calendly"]')) {
+        const link = document.createElement('link');
+        link.href = 'https://assets.calendly.com/assets/external/widget.css';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+      }
+
+      // Load Calendly JS if not already loaded
+      if (!document.querySelector('script[src*="calendly"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://assets.calendly.com/assets/external/widget.js';
+        script.type = 'text/javascript';
+        script.async = true;
+        document.body.appendChild(script);
+        script.onload = () => {
+          initialized.current = true;
+        };
       }
     };
+
+    loadCalendlyScript();
   }, []);
 
   const openCalendly = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: CALENDLY_URL
-      });
+    
+    // Ensure Calendly is loaded before trying to open
+    if (!window.Calendly) {
+      console.warn('Calendly is not loaded yet. Please try again in a moment.');
+      return false;
     }
+
+    window.Calendly.initPopupWidget({
+      url: CALENDLY_URL
+    });
     return false;
   };
 

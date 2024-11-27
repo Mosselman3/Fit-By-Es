@@ -95,12 +95,16 @@ export function FitnessForm() {
     // Handle form submission
     console.log({ answers, contactInfo });
     
-    // Trigger Calendly after form submission
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
-      });
+    // Ensure Calendly is loaded before trying to open
+    if (!window.Calendly) {
+      console.warn('Calendly is not loaded yet. Please try again in a moment.');
+      return;
     }
+
+    // Open Calendly popup
+    window.Calendly.initPopupWidget({
+      url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
+    });
   };
 
   const renderQuestion = () => {
