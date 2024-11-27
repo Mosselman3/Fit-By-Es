@@ -8,23 +8,20 @@ declare global {
 
 interface CalendlyWidgetProps {
   isVisible?: boolean;
+  prefillData?: {
+    name?: string;
+    email?: string;
+    phone?: string;
+  };
 }
 
 const CALENDLY_URL = 'https://calendly.com/sebastiaan-mosselman/fitness-assessment';
 
-const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true }) => {
+const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefillData }) => {
   const initialized = useRef(false);
 
   useEffect(() => {
-    if (initialized.current) return;
-
     const loadCalendlyScript = () => {
-      // Check if Calendly is already loaded
-      if (window.Calendly) {
-        initialized.current = true;
-        return;
-      }
-
       // Load Calendly CSS if not already loaded
       if (!document.querySelector('link[href*="calendly"]')) {
         const link = document.createElement('link');
@@ -43,24 +40,39 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true }) => 
         script.onload = () => {
           initialized.current = true;
         };
+      } else {
+        initialized.current = true;
       }
     };
 
-    loadCalendlyScript();
+    if (!initialized.current) {
+      loadCalendlyScript();
+    }
   }, []);
 
   const openCalendly = (e: React.MouseEvent) => {
     e.preventDefault();
     
     // Ensure Calendly is loaded before trying to open
-    if (!window.Calendly) {
-      console.warn('Calendly is not loaded yet. Please try again in a moment.');
-      return false;
-    }
+    const tryOpenCalendly = () => {
+      if (window.Calendly) {
+        window.Calendly.initPopupWidget({
+          url: CALENDLY_URL,
+          prefill: {
+            name: prefillData?.name || '',
+            email: prefillData?.email || '',
+            firstName: prefillData?.name?.split(' ')[0] || '',
+            lastName: prefillData?.name?.split(' ').slice(1).join(' ') || '',
+            sms: prefillData?.phone || ''
+          }
+        });
+      } else {
+        // If Calendly isn't loaded yet, wait and try again
+        setTimeout(tryOpenCalendly, 100);
+      }
+    };
 
-    window.Calendly.initPopupWidget({
-      url: CALENDLY_URL
-    });
+    tryOpenCalendly();
     return false;
   };
 

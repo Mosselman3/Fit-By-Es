@@ -95,16 +95,26 @@ export function FitnessForm() {
     // Handle form submission
     console.log({ answers, contactInfo });
     
-    // Ensure Calendly is loaded before trying to open
-    if (!window.Calendly) {
-      console.warn('Calendly is not loaded yet. Please try again in a moment.');
-      return;
-    }
+    // Ensure Calendly script is loaded
+    const waitForCalendly = () => {
+      if (window.Calendly) {
+        window.Calendly.initPopupWidget({
+          url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment',
+          prefill: {
+            name: contactInfo.name,
+            email: contactInfo.email,
+            firstName: contactInfo.name.split(' ')[0],
+            lastName: contactInfo.name.split(' ').slice(1).join(' '),
+            sms: contactInfo.phone
+          }
+        });
+      } else {
+        // If Calendly isn't loaded yet, wait and try again
+        setTimeout(waitForCalendly, 100);
+      }
+    };
 
-    // Open Calendly popup
-    window.Calendly.initPopupWidget({
-      url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
-    });
+    waitForCalendly();
   };
 
   const renderQuestion = () => {
@@ -227,7 +237,7 @@ export function FitnessForm() {
             </Button>
           )}
         </div>
-        <CalendlyWidget />
+        <CalendlyWidget prefillData={contactInfo} />
       </form>
     </Card>
   );
