@@ -293,7 +293,7 @@ export function FitnessForm() {
     return (
       <div className="text-center p-8 bg-white rounded-lg shadow-md">
         <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
-        <p className="text-gray-700 mb-6">Your fitness assessment request has been submitted successfully.</p>
+        <p className="text-gray-700 mb-6">Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!</p>
         <CalendlyWidget isVisible={true} />
       </div>
     );
