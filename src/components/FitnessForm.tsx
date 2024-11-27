@@ -101,11 +101,18 @@ export function FitnessForm() {
         window.Calendly.initPopupWidget({
           url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment',
           prefill: {
-            name: contactInfo.name,
             email: contactInfo.email,
-            firstName: contactInfo.name.split(' ')[0],
-            lastName: contactInfo.name.split(' ').slice(1).join(' '),
-            sms: contactInfo.phone
+            name: contactInfo.name,
+            location: contactInfo.availability,
+            guests: [],
+            date: null,
+            customAnswers: {
+              a1: answers[1] || '', // How can I help?
+              a2: answers[2] || '', // Gender
+              a3: answers[3] || '', // Age
+              a4: answers[4] || '', // Goals and motivation
+              a5: contactInfo.phone || '' // Phone number
+            }
           }
         });
       } else {
@@ -237,7 +244,7 @@ export function FitnessForm() {
             </Button>
           )}
         </div>
-        <CalendlyWidget prefillData={contactInfo} />
+        <CalendlyWidget prefillData={contactInfo} answers={answers} />
       </form>
     </Card>
   );

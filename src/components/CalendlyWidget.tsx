@@ -12,12 +12,14 @@ interface CalendlyWidgetProps {
     name?: string;
     email?: string;
     phone?: string;
+    availability?: string;
   };
+  answers?: Record<number, string>;
 }
 
 const CALENDLY_URL = 'https://calendly.com/sebastiaan-mosselman/fitness-assessment';
 
-const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefillData }) => {
+const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefillData, answers = {} }) => {
   const initialized = useRef(false);
 
   useEffect(() => {
@@ -53,17 +55,23 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefi
   const openCalendly = (e: React.MouseEvent) => {
     e.preventDefault();
     
-    // Ensure Calendly is loaded before trying to open
     const tryOpenCalendly = () => {
       if (window.Calendly) {
         window.Calendly.initPopupWidget({
           url: CALENDLY_URL,
           prefill: {
-            name: prefillData?.name || '',
             email: prefillData?.email || '',
-            firstName: prefillData?.name?.split(' ')[0] || '',
-            lastName: prefillData?.name?.split(' ').slice(1).join(' ') || '',
-            sms: prefillData?.phone || ''
+            name: prefillData?.name || '',
+            location: prefillData?.availability || '',
+            guests: [],
+            date: null,
+            customAnswers: {
+              a1: answers[1] || '', // How can I help?
+              a2: answers[2] || '', // Gender
+              a3: answers[3] || '', // Age
+              a4: answers[4] || '', // Goals and motivation
+              a5: prefillData?.phone || '' // Phone number
+            }
           }
         });
       } else {
