@@ -33,14 +33,34 @@ const Service = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* SVG for this service icon */}
+                <path
+                  d="M8 12H4C3.44772 12 3 12.4477 3 13V25C3 25.5523 3.44772 26 4 26H8C8.55228 26 9 25.5523 9 25V13C9 12.4477 8.55228 12 8 12Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M32 12H28C27.4477 12 27 12.4477 27 13V25C27 25.5523 27.4477 26 28 26H32C32.5523 26 33 25.5523 33 25V13C33 12.4477 32.5523 12 32 12Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M9 19H27"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             }
             learnMoreLink="/weight-loss"
           />
           <ServiceCard
             title="Sports Competition Coaching"
-            details="Custom training programme and guidance for your sports events."
+            details="Custom Training Programme and Guidance for Your Sports Event."
             icon={
               <svg
                 width="36"
@@ -49,14 +69,34 @@ const Service = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* SVG for this service icon */}
+                <path
+                  d="M11.25 17.25L18 10.5L24.75 17.25"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M18 25.5V10.5"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M28.5 25.5H7.5"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             }
             learnMoreLink="/sports-coaching"
           />
           <ServiceCard
             title="Postpartum Pregnancy Recovery Program"
-            details="Custom training program for getting back in shape after pregnancy."
+            details="Custom Training Program for Getting Back in Shape After pregnancy."
             icon={
               <svg
                 width="36"
@@ -65,14 +105,28 @@ const Service = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* SVG for this service icon */}
+                <path
+                  d="M18 31.5C25.4558 31.5 31.5 25.4558 31.5 18C31.5 10.5442 25.4558 4.5 18 4.5C10.5442 4.5 4.5 10.5442 4.5 18C4.5 25.4558 10.5442 31.5 18 31.5Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M18 12V18L22.5 20.25"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             }
             learnMoreLink="/postpartum-recovery"
           />
           <ServiceCard
-            title="Sport Event Training Schedules"
-            details="Schemes for running (5-10-21-42 km), Swimming, and Triathlon."
+            title=" Download Training Schedules"
+            details="Get Your Training Scheme: 
+            Running (5-42Km), Swimming, and Triathlon."
             icon={
               <svg
                 width="36"
@@ -81,7 +135,20 @@ const Service = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* SVG for this service icon */}
+                <path
+                  d="M18 31.5C25.4558 31.5 31.5 25.4558 31.5 18C31.5 10.5442 25.4558 4.5 18 4.5C10.5442 4.5 4.5 10.5442 4.5 18C4.5 25.4558 10.5442 31.5 18 31.5Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M18 22.5C20.4853 22.5 22.5 20.4853 22.5 18C22.5 15.5147 20.4853 13.5 18 13.5C15.5147 13.5 13.5 15.5147 13.5 18C13.5 20.4853 15.5147 22.5 18 22.5Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             }
             learnMoreLink="/sport-event-schedules"
