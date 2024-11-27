@@ -65,7 +65,6 @@ const questions: Question[] = [
 export function FitnessForm() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [showCalendly, setShowCalendly] = useState(false);
   const [contactInfo, setContactInfo] = useState({
     name: '',
     email: '',
@@ -96,13 +95,12 @@ export function FitnessForm() {
     // Handle form submission
     console.log({ answers, contactInfo });
     
-    // Trigger Calendly popup after form submission
+    // Trigger Calendly after form submission
     if (window.Calendly) {
       window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/sebastiaan-mosselman/fintess'
+        url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
       });
     }
-    setShowCalendly(true);
   };
 
   const renderQuestion = () => {
@@ -225,7 +223,7 @@ export function FitnessForm() {
             </Button>
           )}
         </div>
-        {showCalendly && <CalendlyWidget />}
+        <CalendlyWidget />
       </form>
     </Card>
   );

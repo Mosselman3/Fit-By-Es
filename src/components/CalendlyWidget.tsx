@@ -7,11 +7,12 @@ declare global {
 }
 
 interface CalendlyWidgetProps {
-  isVisible: boolean;
-  onClose?: () => void;
+  isVisible?: boolean;
 }
 
-const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible, onClose }) => {
+const CALENDLY_URL = 'https://calendly.com/sebastiaan-mosselman/fitness-assessment';
+
+const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true }) => {
   useEffect(() => {
     // Load Calendly CSS
     const link = document.createElement('link');
@@ -22,6 +23,7 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible, onClose }) =
     // Load Calendly JS
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.type = 'text/javascript';
     script.async = true;
     document.body.appendChild(script);
 
@@ -35,24 +37,25 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible, onClose }) =
     };
   }, []);
 
-  const handleClick = (e: React.MouseEvent) => {
+  const openCalendly = (e: React.MouseEvent) => {
     e.preventDefault();
     if (window.Calendly) {
       window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/sebastiaan-mosselman/fintess'
+        url: CALENDLY_URL
       });
     }
+    return false;
   };
 
   if (!isVisible) return null;
 
   return (
     <a
-      href="#"
-      onClick={handleClick}
+      href=""
+      onClick={openCalendly}
       className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors inline-block"
     >
-      Schedule Free Intake
+      Plan your FREE Fitness Assessment
     </a>
   );
 };
