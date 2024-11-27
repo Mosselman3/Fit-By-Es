@@ -6,6 +6,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Card } from './ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import CalendlyWidget from './CalendlyWidget';
 
 interface Question {
   id: number;
@@ -64,6 +65,7 @@ const questions: Question[] = [
 export function FitnessForm() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [showCalendly, setShowCalendly] = useState(false);
   const [contactInfo, setContactInfo] = useState({
     name: '',
     email: '',
@@ -93,6 +95,14 @@ export function FitnessForm() {
     e.preventDefault();
     // Handle form submission
     console.log({ answers, contactInfo });
+    
+    // Trigger Calendly popup after form submission
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/sebastiaan-mosselman/fintess'
+      });
+    }
+    setShowCalendly(true);
   };
 
   const renderQuestion = () => {
@@ -215,6 +225,7 @@ export function FitnessForm() {
             </Button>
           )}
         </div>
+        {showCalendly && <CalendlyWidget />}
       </form>
     </Card>
   );
