@@ -91,7 +91,29 @@ export function FitnessForm() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate contact information
+    const { name, email, phone, availability } = contactInfo;
+    if (!name || !email || !phone || !availability) {
+      alert('Please fill out all contact information fields');
+      return;
+    }
+
+    // Validate other required answers
+    const requiredQuestions = [1, 2, 3, 4]; // Service type, Gender, Age, Goals
+    const missingAnswers = requiredQuestions.filter(
+      questionId => !answers[questionId]
+    );
+
+    if (missingAnswers.length > 0) {
+      alert('Please answer all questions before submitting');
+      return;
+    }
+
+    // Handle form submission
+    console.log('Form Submission Data:', { answers, contactInfo });
     setShowCalendly(true);
   };
 
@@ -183,7 +205,7 @@ export function FitnessForm() {
 
   return (
     <Card className="p-6 max-w-md mx-auto">
-      <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <Progress value={progress} className="mb-6" />
         <h3 className="text-lg font-medium text-center mb-4">{questions[currentQuestion].text}</h3>
         {renderQuestion()}
@@ -215,9 +237,11 @@ export function FitnessForm() {
             </Button>
           )}
         </div>
-        {showCalendly && (
-          <CalendlyWidget prefillData={contactInfo} answers={answers} />
-        )}
+        <CalendlyWidget 
+          isVisible={showCalendly} 
+          prefillData={contactInfo} 
+          answers={answers}
+        />
       </form>
     </Card>
   );
