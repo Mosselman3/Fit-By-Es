@@ -15,14 +15,18 @@ interface CalendlyWidgetProps {
     availability?: string;
   };
   answers?: Record<number, string>;
-  onTrigger?: () => void;
+  autoTrigger?: boolean;
 }
 
 const CALENDLY_URL = 'https://calendly.com/sebastiaan-mosselman/fitness-assessment';
 
-const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefillData, answers = {}, onTrigger }) => {
+const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ 
+  isVisible = true, 
+  prefillData, 
+  answers = {},
+  autoTrigger = false 
+}) => {
   const initialized = useRef(false);
-  const calendlyRef = useRef(null);
 
   const openCalendly = (e?: React.MouseEvent) => {
     if (e) {
@@ -31,7 +35,7 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefi
     
     const tryOpenCalendly = () => {
       if (window.Calendly) {
-        const prefillData = {
+        const calendlyData = {
           email: prefillData?.email || '',
           name: prefillData?.name || '',
           location: prefillData?.availability || '',
@@ -46,16 +50,12 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefi
           }
         };
 
-        console.log('CalendlyWidget Prefill Data:', prefillData);
+        console.log('CalendlyWidget Prefill Data:', calendlyData);
 
         window.Calendly.initPopupWidget({
           url: CALENDLY_URL,
-          prefill: prefillData
+          prefill: calendlyData
         });
-        
-        if (onTrigger) {
-          onTrigger();
-        }
       } else {
         // If Calendly isn't loaded yet, wait and try again
         setTimeout(tryOpenCalendly, 100);
@@ -63,7 +63,6 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefi
     };
 
     tryOpenCalendly();
-    return false;
   };
 
   useEffect(() => {
@@ -85,41 +84,34 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ isVisible = true, prefi
         document.body.appendChild(script);
         script.onload = () => {
           initialized.current = true;
+          if (autoTrigger) {
+            openCalendly();
+          }
         };
       } else {
         initialized.current = true;
+        if (autoTrigger) {
+          openCalendly();
+        }
       }
     };
 
     if (!initialized.current) {
       loadCalendlyScript();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isVisible) {
+    } else if (autoTrigger) {
       openCalendly();
     }
-  }, [isVisible]);
+  }, [autoTrigger]);
 
-  const triggerCalendly = () => {
-    if (calendlyRef.current) {
-      calendlyRef.current.openCalendly();
-    }
-  };
+  if (!isVisible) return null;
 
   return (
-    <div ref={calendlyRef}>
-      {isVisible && (
-        <a
-          href=""
-          onClick={openCalendly}
-          className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors inline-block"
-        >
-          Plan your FREE Fitness Assessment
-        </a>
-      )}
-    </div>
+    <button
+      onClick={openCalendly}
+      className="w-full bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
+    >
+      Plan your FREE Fitness Assessment
+    </button>
   );
 };
 

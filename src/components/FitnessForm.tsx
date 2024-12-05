@@ -72,6 +72,7 @@ export function FitnessForm() {
     availability: ''
   });
   const [showCalendly, setShowCalendly] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
@@ -114,7 +115,7 @@ export function FitnessForm() {
 
     // Handle form submission
     console.log('Form Submission Data:', { answers, contactInfo });
-    setShowCalendly(true);
+    setFormSubmitted(true);
   };
 
   const renderQuestion = () => {
@@ -209,39 +210,48 @@ export function FitnessForm() {
         <Progress value={progress} className="mb-6" />
         <h3 className="text-lg font-medium text-center mb-4">{questions[currentQuestion].text}</h3>
         {renderQuestion()}
-        <div className="flex justify-between mt-6">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentQuestion === 0}
-            className="flex items-center"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          {currentQuestion === questions.length - 1 ? (
-            <Button type="button" onClick={handleSubmit} className="flex items-center">
-              Contact Us
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          ) : (
+        {formSubmitted ? (
+          <div className="mt-6 space-y-4">
+            <div className="text-center text-green-600 font-medium">
+              Thanks for submitting! You can schedule your assessment below.
+            </div>
+            <CalendlyWidget 
+              isVisible={true}
+              prefillData={contactInfo} 
+              answers={answers}
+              autoTrigger={true}
+            />
+          </div>
+        ) : (
+          <div className="flex justify-between mt-6">
             <Button
               type="button"
-              onClick={handleNext}
-              disabled={!answers[questions[currentQuestion].id]}
+              variant="outline"
+              onClick={handlePrevious}
+              disabled={currentQuestion === 0}
               className="flex items-center"
             >
-              Next
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
             </Button>
-          )}
-        </div>
-        <CalendlyWidget 
-          isVisible={showCalendly} 
-          prefillData={contactInfo} 
-          answers={answers}
-        />
+            {currentQuestion === questions.length - 1 ? (
+              <Button type="submit" className="flex items-center">
+                Contact Us
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                onClick={handleNext}
+                disabled={!answers[questions[currentQuestion].id]}
+                className="flex items-center"
+              >
+                Next
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            )}
+          </div>
+        )}
       </form>
     </Card>
   );
