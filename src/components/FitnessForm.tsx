@@ -71,6 +71,7 @@ export function FitnessForm() {
     phone: '',
     availability: ''
   });
+  const [showCalendly, setShowCalendly] = useState(false);
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
@@ -90,61 +91,8 @@ export function FitnessForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Validate contact information
-    const { name, email, phone, availability } = contactInfo;
-    if (!name || !email || !phone || !availability) {
-      alert('Please fill out all contact information fields');
-      return;
-    }
-
-    // Validate other required answers
-    const requiredQuestions = [1, 2, 3, 4]; // Service type, Gender, Age, Goals
-    const missingAnswers = requiredQuestions.filter(
-      questionId => !answers[questionId]
-    );
-
-    if (missingAnswers.length > 0) {
-      alert('Please answer all questions before submitting');
-      return;
-    }
-
-    // Handle form submission
-    console.log('Form Submission Data:', { answers, contactInfo });
-    
-    // Ensure Calendly script is loaded
-    const waitForCalendly = () => {
-      if (window.Calendly) {
-        const prefillData = {
-          email: contactInfo.email,
-          name: contactInfo.name,
-          location: contactInfo.availability,
-          guests: [],
-          date: null,
-          customAnswers: {
-            a1: answers[1] || '', // How can I help?
-            a2: answers[2] || '', // Gender
-            a3: answers[3] || '', // Age
-            a4: answers[4] || '', // Goals and motivation
-            a5: contactInfo.phone || '' // Phone number
-          }
-        };
-
-        console.log('Calendly Prefill Data:', prefillData);
-
-        window.Calendly.initPopupWidget({
-          url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment',
-          prefill: prefillData
-        });
-      } else {
-        // If Calendly isn't loaded yet, wait and try again
-        setTimeout(waitForCalendly, 100);
-      }
-    };
-
-    waitForCalendly();
+  const handleSubmit = () => {
+    setShowCalendly(true);
   };
 
   const renderQuestion = () => {
@@ -235,7 +183,7 @@ export function FitnessForm() {
 
   return (
     <Card className="p-6 max-w-md mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
         <Progress value={progress} className="mb-6" />
         <h3 className="text-lg font-medium text-center mb-4">{questions[currentQuestion].text}</h3>
         {renderQuestion()}
@@ -251,7 +199,7 @@ export function FitnessForm() {
             Back
           </Button>
           {currentQuestion === questions.length - 1 ? (
-            <Button type="submit" className="flex items-center">
+            <Button type="button" onClick={handleSubmit} className="flex items-center">
               Contact Us
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -267,7 +215,9 @@ export function FitnessForm() {
             </Button>
           )}
         </div>
-        <CalendlyWidget prefillData={contactInfo} answers={answers} />
+        {showCalendly && (
+          <CalendlyWidget prefillData={contactInfo} answers={answers} />
+        )}
       </form>
     </Card>
   );
