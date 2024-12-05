@@ -69,7 +69,7 @@ const Contact = () => {
             </div>
           </div>
           <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
-            <div className="relative p-8 bg-white rounded-lg shadow-lg sm:p-12">
+            <div className="relative p-8">
               <div className="mb-8">
                 <h2 className="text-primary text-3xl font-bold">Start Your Journey Today</h2>
                 <p className="text-gray-700 mt-3 text-lg font-medium tracking-wide">Let's Create Your Customized Fitness Plan</p>

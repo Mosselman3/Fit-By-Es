@@ -4,7 +4,6 @@ import { Progress } from './ui/progress';
 import { cn } from '../lib/utils';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Card } from './ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import CalendlyWidget from './CalendlyWidget';
 
@@ -78,6 +77,9 @@ export function FitnessForm() {
 
   const handleAnswer = (questionId: number, answer: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
+    if (questions[currentQuestion].type === 'select') {
+      handleNext();
+    }
   };
 
   const handleNext = () => {
@@ -123,7 +125,7 @@ export function FitnessForm() {
 
     if (question.type === 'contact') {
       return (
-        <div className="space-y-4 max-w-sm mx-auto">
+        <div className="space-y-4">
           <div>
             <Label htmlFor="name">Full Name</Label>
             <Input
@@ -131,6 +133,7 @@ export function FitnessForm() {
               value={contactInfo.name}
               onChange={(e) => setContactInfo(prev => ({ ...prev, name: e.target.value }))}
               className="w-full"
+              required
             />
           </div>
           <div>
@@ -141,6 +144,7 @@ export function FitnessForm() {
               value={contactInfo.email}
               onChange={(e) => setContactInfo(prev => ({ ...prev, email: e.target.value }))}
               className="w-full"
+              required
             />
           </div>
           <div>
@@ -151,6 +155,7 @@ export function FitnessForm() {
               value={contactInfo.phone}
               onChange={(e) => setContactInfo(prev => ({ ...prev, phone: e.target.value }))}
               className="w-full"
+              required
             />
           </div>
           <div>
@@ -160,6 +165,8 @@ export function FitnessForm() {
               value={contactInfo.availability}
               onChange={(e) => setContactInfo(prev => ({ ...prev, availability: e.target.value }))}
               className="w-full"
+              required
+              placeholder="e.g., Weekday mornings, Weekend afternoons"
             />
           </div>
         </div>
@@ -168,18 +175,20 @@ export function FitnessForm() {
 
     if (question.type === 'text') {
       return (
-        <div className="max-w-sm mx-auto">
-          <Input
+        <div>
+          <textarea
             value={answers[question.id] || ''}
             onChange={(e) => handleAnswer(question.id, e.target.value)}
-            className="w-full"
+            className="w-full h-32 p-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+            placeholder="Please share your goals and what motivates you..."
+            required
           />
         </div>
       );
     }
 
     return (
-      <div className="grid grid-cols-1 gap-4 max-w-sm mx-auto">
+      <div className="grid grid-cols-1 gap-4">
         {question.options?.map((option) => (
           <button
             key={option.text}
@@ -205,10 +214,10 @@ export function FitnessForm() {
   };
 
   return (
-    <Card className="p-6 max-w-md mx-auto">
+    <div>
       <form onSubmit={handleSubmit} className="space-y-6">
-        <Progress value={progress} className="mb-6" />
-        <h3 className="text-lg font-medium text-center mb-4">{questions[currentQuestion].text}</h3>
+        <Progress value={progress} className="mb-16" />
+        <h3 className="text-lg font-medium text-center mb-8">{questions[currentQuestion].text}</h3>
         {renderQuestion()}
         {formSubmitted ? (
           <div className="mt-6 space-y-4">
@@ -253,6 +262,6 @@ export function FitnessForm() {
           </div>
         )}
       </form>
-    </Card>
+    </div>
   );
 }

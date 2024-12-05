@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { Button } from './ui/button';
 
 declare global {
   interface Window {
@@ -35,6 +37,9 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
     
     const tryOpenCalendly = () => {
       if (window.Calendly) {
+        // Get the text field answer (question 4)
+        const goalsText = answers[4] || '';
+        
         const calendlyData = {
           email: prefillData?.email || '',
           name: prefillData?.name || '',
@@ -45,7 +50,7 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
             a1: answers[1] || '', // How can I help?
             a2: answers[2] || '', // Gender
             a3: answers[3] || '', // Age
-            a4: answers[4] || '', // Goals and motivation
+            a4: goalsText, // Goals and motivation
             a5: prefillData?.phone || '' // Phone number
           }
         };
@@ -106,12 +111,13 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
   if (!isVisible) return null;
 
   return (
-    <button
+    <Button
       onClick={openCalendly}
-      className="w-full bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
+      className="w-full flex items-center justify-center"
     >
       Plan your FREE Fitness Assessment
-    </button>
+      <ArrowRight className="w-4 h-4 ml-2" />
+    </Button>
   );
 };
 
