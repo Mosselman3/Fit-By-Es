@@ -4,7 +4,7 @@ import { Progress } from './ui/progress';
 import { cn } from '../lib/utils';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
 import CalendlyWidget from './CalendlyWidget';
 
 interface Question {
@@ -220,15 +220,20 @@ export function FitnessForm() {
         <h3 className="text-lg font-medium text-center mb-8">{questions[currentQuestion].text}</h3>
         {renderQuestion()}
         {formSubmitted ? (
-          <div className="mt-6 space-y-4">
-            <div className="text-center text-green-600 font-medium">
-              Thanks for submitting! You can schedule your assessment below.
+          <div className="mt-6 space-y-6">
+            <div className="text-center space-y-4">
+              <CheckCircle2 className="w-16 h-16 text-green-600 mx-auto animate-fade-in" />
+              <h3 className="text-2xl font-semibold text-gray-900">Thank You!</h3>
+              <p className="text-gray-600">
+                Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!
+              </p>
             </div>
             <CalendlyWidget 
               isVisible={true}
               prefillData={contactInfo} 
               answers={answers}
               autoTrigger={true}
+              className="w-full"
             />
           </div>
         ) : (

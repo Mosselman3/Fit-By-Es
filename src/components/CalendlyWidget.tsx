@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
+import cn from 'classnames';
 
 declare global {
   interface Window {
@@ -18,6 +19,7 @@ interface CalendlyWidgetProps {
   };
   answers?: Record<number, string>;
   autoTrigger?: boolean;
+  className?: string;
 }
 
 const CALENDLY_URL = 'https://calendly.com/sebastiaan-mosselman/fitness-assessment';
@@ -26,7 +28,8 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
   isVisible = true, 
   prefillData, 
   answers = {},
-  autoTrigger = false 
+  autoTrigger = false,
+  className
 }) => {
   const initialized = useRef(false);
 
@@ -108,17 +111,23 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
     }
   }, [autoTrigger]);
 
-  if (!isVisible) return null;
-
-  return (
-    <Button
-      onClick={openCalendly}
-      className="w-full flex items-center justify-center"
-    >
-      Plan your FREE Fitness Assessment
-      <ArrowRight className="w-4 h-4 ml-2" />
-    </Button>
-  );
+  return isVisible ? (
+    <div className="text-center w-full">
+      <Button
+        onClick={openCalendly}
+        className={cn(
+          "bg-green-600 hover:bg-green-700 text-white",
+          "flex items-center justify-center gap-2",
+          "w-full md:w-auto md:min-w-[200px]",
+          "px-4 py-2 text-sm md:text-base",
+          className
+        )}
+      >
+        Schedule Your Assessment Now
+        <ArrowRight className="w-4 h-4 flex-shrink-0" />
+      </Button>
+    </div>
+  ) : null;
 };
 
 export default CalendlyWidget;
