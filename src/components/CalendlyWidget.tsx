@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
-import cn from 'classnames';
+import { cn } from '../lib/utils';
 
 declare global {
   interface Window {
