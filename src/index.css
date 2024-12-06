@@ -108,3 +108,16 @@ p {
 .animate-fade-in {
   animation: fadeInScale 0.5s ease-out forwards;
 }
+
+@keyframes checkmark {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-checkmark {
+  animation: checkmark 0.5s ease-out forwards;
+}

@@ -223,9 +223,9 @@ export function FitnessForm() {
           <div className="mt-6 space-y-6">
             <div className="text-center space-y-4">
               <CheckCircle2 className="w-16 h-16 text-green-600 mx-auto animate-fade-in" />
-              <h3 className="text-2xl font-semibold text-gray-900">Thank You!</h3>
+              <h3 className="text-2xl font-semibold text-gray-900">You're All Set!</h3>
               <p className="text-gray-600">
-                Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!
+                Your Free Fitness Assessment is just one step away. Click below to schedule your call and take that first step towards your fitness goals!
               </p>
             </div>
             <CalendlyWidget 
