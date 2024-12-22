@@ -14,18 +14,14 @@ body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F5F5F5;
+  color: #4A4A4A;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-/* Ensure text is visible */
-body, #root {
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #fafafa;
 }
 
 main {
@@ -36,11 +32,12 @@ main {
 
 section {
   width: 100%;
+  background-color: white;
 }
 
 /* Custom CTA Button Style */
 .cta-button {
-  @apply py-2 px-6 rounded text-base font-medium shadow-md transition duration-300 ease-in-out transform uppercase;
+  @apply py-2 px-6 rounded text-base font-medium shadow-md transition duration-300 ease-in-out transform uppercase tracking-wider;
 }
 
 .cta-button:hover {
@@ -48,14 +45,41 @@ section {
 }
 
 .cta-button-primary {
-  @apply bg-white text-primary hover:bg-primary hover:text-white;
+  @apply bg-primary text-dark font-bold hover:bg-primary-dark hover:text-white;
 }
 
 .cta-button-secondary {
-  @apply bg-primary text-white hover:bg-white hover:text-primary;
+  @apply bg-secondary text-dark font-bold hover:bg-secondary-dark hover:text-white;
+}
+
+/* Hyperlink Styles */
+a {
+  @apply text-primary-dark font-semibold transition-colors duration-300 ease-in-out;
+}
+
+a:hover {
+  @apply text-secondary-dark underline;
+}
+
+/* Learn More Link Style */
+.learn-more {
+  @apply inline-flex items-center text-primary-dark font-bold hover:text-secondary-dark;
+}
+
+.learn-more:after {
+  content: ' →';
+  @apply ml-1 transition-transform duration-300 ease-in-out;
+}
+
+.learn-more:hover:after {
+  transform: translateX(3px);
 }
 
 /* Material Design Typography */
+h1, h2, h3 {
+  color: #2C3E50;
+}
+
 h1 {
   @apply text-5xl font-light mb-4;
 }
@@ -72,52 +96,4 @@ p {
   @apply text-base font-normal leading-6;
 }
 
-/* Material Design Elevation */
-.elevation-1 {
-  @apply shadow-md;
-}
-
-.elevation-2 {
-  @apply shadow-lg;
-}
-
-/* Fade-in Animation */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Animation for success checkmark */
-@keyframes fadeInScale {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeInScale 0.5s ease-out forwards;
-}
-
-@keyframes checkmark {
-  0% {
-    stroke-dashoffset: 100;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-.animate-checkmark {
-  animation: checkmark 0.5s ease-out forwards;
-}
+/* Remaining CSS styles... */
