@@ -214,11 +214,14 @@ export function FitnessForm() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <Progress value={progress} className="mb-16" />
-        <h3 className="text-lg font-medium text-center mb-8">{questions[currentQuestion].text}</h3>
-        {renderQuestion()}
+    <div className="w-full max-w-md mx-auto rounded-lg bg-white p-8 shadow-lg sm:p-12">
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <Progress value={progress} className="w-full" />
+        
+        <div className="mt-8">
+          <h3 className="text-3xl font-semibold mb-6 pt-4">{questions[currentQuestion].text}</h3>
+          {renderQuestion()}
+        </div>
         {formSubmitted ? (
           <div className="mt-6 space-y-6">
             <div className="text-center space-y-4">

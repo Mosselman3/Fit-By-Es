@@ -10,20 +10,20 @@ const Header = () => {
     }
   };
   return (
-    <header className="bg-primary text-white py-3 elevation-2 sticky top-0 z-50">
+    <header className="bg-primary text-dark py-3 elevation-2 sticky top-0 z-50">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
         <div className="flex items-center mb-2 md:mb-0">
           <Dumbbell className="w-6 h-6 mr-2" />
-          <a href="/" className="text-lg font-medium">
+          <a href="/" className="text-lg font-semibold text-dark hover:text-dark/80">
             FitByEs
           </a>
         </div>
         <nav>
           <ul className="flex space-x-4">
-            <li><a href="#services" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#services')} className="hover:text-primary-light">Services</a></li>
-            <li><a href="#trainer" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#trainer')} className="hover:text-primary-light">Trainer</a></li>
-            <li><a href="#testimonials" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#testimonials')} className="hover:text-primary-light">Testimonials</a></li>
-            <li><a href="#contact" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#contact')} className="hover:text-primary-light">Contact</a></li>
+            <li><a href="#services" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#services')} className="text-dark font-medium hover:text-dark/80 transition-colors">Services</a></li>
+            <li><a href="#trainer" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#trainer')} className="text-dark font-medium hover:text-dark/80 transition-colors">Trainer</a></li>
+            <li><a href="#testimonials" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#testimonials')} className="text-dark font-medium hover:text-dark/80 transition-colors">Testimonials</a></li>
+            <li><a href="#contact" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#contact')} className="text-dark font-medium hover:text-dark/80 transition-colors">Contact</a></li>
           </ul>
         </nav>
       </div>

@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FitnessForm } from './FitnessForm/index';
 
 const Contact = () => {
+  const highlightRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    if (highlightRef.current) {
+      observer.observe(highlightRef.current);
+    }
+
+    return () => {
+      if (highlightRef.current) {
+        observer.unobserve(highlightRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className="relative z-10 overflow-hidden bg-white py-20 lg:py-[120px]">
       <div className="container mx-auto">
@@ -12,7 +38,7 @@ const Contact = () => {
                 Your Fitness Transformation
               </span>
               <h2 className="text-dark mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
-                START TODAY
+                START <span ref={highlightRef} className="highlight-text">TODAY</span>
               </h2>
               <p className="text-base leading-relaxed text-body-color mb-9">
                 Transform your fitness journey with our personalized 3-step approach. 
@@ -66,13 +92,7 @@ const Contact = () => {
             </div>
           </div>
           <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
-            <div className="relative p-8">
-              <div className="mb-8">
-                <h2 className="text-primary text-3xl font-bold">Start Your Journey Today</h2>
-                <p className="text-gray-700 mt-3 text-lg font-medium tracking-wide">Let's Create Your Customized Fitness Plan</p>
-              </div>
-              <FitnessForm key="contact-form" />
-            </div>
+            <FitnessForm key="contact-form" />
           </div>
         </div>
       </div>
