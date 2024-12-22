@@ -68,12 +68,13 @@ export function FitnessForm() {
       type: 'radio',
       required: true,
       options: [
-        { value: 'weight-muscle', label: 'Weight Loss & Build Muscle', icon: '🏋️' },
-        { value: 'sports', label: 'Sports Competition Coaching', icon: '🏃' },
-        { value: 'pregnancy', label: 'Pregnancy Recovery', icon: '🤰' }
+        { value: 'getting-fit', label: 'Get Fit & Improve Health', icon: '🏃' },
+        { value: 'competition', label: 'Competition Coaching', icon: '🥇' },
+        { value: 'weight-loss', label: 'Weight Loss', icon: '⚖️' },
+        { value: 'build-muscle', label: 'Build Muscle', icon: '🏋️' }
       ]
     },
-    ...(answers[1] === 'sports' ? [
+    ...(answers[1] === 'competition' ? [
       {
         id: 2,
         text: 'The type of sport event you train for?',
@@ -160,7 +161,7 @@ export function FitnessForm() {
           if (answer === 'pregnancy') {
             setAnswers((prev: AnswerType) => ({ ...prev, 2: 'female' }));
             setCurrentQuestion(2);
-          } else if (answer === 'sports') {
+          } else if (answer === 'competition') {
             setCurrentQuestion(1);
           } else {
             setCurrentQuestion((prev: number) => prev + 1);
@@ -323,7 +324,7 @@ export function FitnessForm() {
                 type="button"
                 onClick={handlePrevious}
                 variant="outline" 
-                className="h-12 text-primary border-primary hover:bg-primary/10 w-full sm:w-auto min-w-[120px]"
+                className="h-12 text-primary border-primary bg-primary/10 hover:bg-black hover:text-white hover:border-black w-full sm:w-auto min-w-[120px]"
               >
                 <div className="flex items-center justify-center gap-2">
                   <ArrowLeft className="w-4 h-4" />
@@ -338,7 +339,7 @@ export function FitnessForm() {
               <Button
                 variant="button"
                 disabled={!canProceed()}
-                className="h-12 bg-primary hover:bg-primary-dark text-white w-full sm:w-auto min-w-[120px]"
+                className="h-12 bg-primary-dark shadow-md hover:bg-black text-white w-full sm:w-auto min-w-[120px] font-medium"
                 onClick={handleNext}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -351,7 +352,7 @@ export function FitnessForm() {
             {currentQuestion === questions.length - 1 ? (
               <Button 
                 variant="submit"
-                className="h-12 bg-primary hover:bg-primary-dark text-white w-full sm:w-auto min-w-[120px]"
+                className="h-12 bg-primary-dark shadow-md hover:bg-black text-white w-full sm:w-auto min-w-[120px] font-medium"
                 disabled={!isContactValid() || isSubmitting}
               >
                 <div className="flex items-center justify-center gap-2">

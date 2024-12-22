@@ -23,10 +23,10 @@ const questions: Question[] = [
     text: 'How can I help?',
     type: 'select',
     options: [
-      { text: 'Weight Loss & Build Muscle' },
-      { text: 'Healthy Lifestyle' },
+      { text: 'Weight Loss' },
+      { text: 'Build Muscle' },
       { text: 'Sports Competition Coaching' },
-      { text: 'Post Pregnancy Recovery' }
+      { text: 'Pregnancy Recovery' }
     ]
   },
   {
@@ -125,7 +125,7 @@ export function FitnessForm() {
 
     if (question.type === 'contact') {
       return (
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div>
             <Label htmlFor="name">Full Name</Label>
             <Input
@@ -179,7 +179,7 @@ export function FitnessForm() {
           <textarea
             value={answers[question.id] || ''}
             onChange={(e) => handleAnswer(question.id, e.target.value)}
-            className="w-full h-32 p-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full h-40 p-4 text-lg border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Please share your goals and what motivates you..."
             required
           />
@@ -188,7 +188,7 @@ export function FitnessForm() {
     }
 
     return (
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-6">
         {question.options?.map((option) => (
           <button
             key={option.text}
@@ -197,7 +197,7 @@ export function FitnessForm() {
               handleNext();
             }}
             className={cn(
-              'p-4 rounded-lg text-center transition-all',
+              'p-6 rounded-lg text-center transition-all text-lg',
               'bg-white hover:bg-primary hover:text-white',
               'border border-gray-200',
               answers[question.id] === option.text && 'bg-primary text-white'
@@ -219,7 +219,7 @@ export function FitnessForm() {
         <Progress value={progress} className="w-full" />
         
         <div className="mt-8">
-          <h3 className="text-3xl font-semibold mb-6 pt-4">{questions[currentQuestion].text}</h3>
+          <h2 className="text-2xl font-semibold mb-4">{questions[currentQuestion].text}</h2>
           {renderQuestion()}
         </div>
         {formSubmitted ? (

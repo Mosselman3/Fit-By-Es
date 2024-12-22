@@ -36,7 +36,7 @@ export function QuestionCard({ question, answer, error, onAnswer, onContactInfoC
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="min-h-[320px] px-4 sm:px-6"
       >
-        <Label className="text-lg sm:text-xl font-medium text-gray-800 mb-6 block leading-relaxed">
+        <Label className="text-xl sm:text-2xl font-medium text-gray-800 mb-6 block leading-relaxed">
           {question.text}
           {question.required && <span className="text-red-500 ml-1">*</span>}
         </Label>

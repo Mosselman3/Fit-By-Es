@@ -17,20 +17,31 @@ const TrainerProfile = () => {
             />
           </div>
           <div className="md:w-1/2">
-            <h3 className="text-2xl font-medium mb-4">Estrella Wierikx</h3>
-            <p className="mb-4">
-              With over a decade of experience in professional sports and personal training and a robust background in competitive swimming, 
-              Estrella is dedicated to empowering clients to reach their health and fitness goals. Her expertise in high-intensity workouts 
-              and personalized training programs has enabled many to overcome fitness challenges, resulting in enhanced overall health and lifestyle.
-            </p>
-            <ul className="list-disc list-inside mb-4">
-              <li>Former Professional Swimmer</li>
-              <li>Specialized in High-Intensity Interval Training (HIIT)</li>
-              <li>Certified Nutrition and Wellness Coach</li>
-            </ul>
-            <a href="#contact" className="cta-button cta-button-secondary inline-block">
-              Train with Estrella
-            </a>
+            <h3 className="text-3xl font-semibold mb-6">Why Choose Me as Your Trainer?</h3>
+            
+            <div className="space-y-6 text-gray-700">
+              <p className="leading-relaxed">
+                As a former competitive swimmer, I know what it's like to live and breathe sports—until life throws you a curveball. A sudden injury turned my world upside down, forcing me to rebuild my career and rediscover my passion for fitness. That journey taught me how it feels to lose your way in sport, no matter the circumstances.
+              </p>
+              
+              <p className="leading-relaxed">
+                This is why I'm passionate about helping others. I understand the challenges, whether you're trying to get back into fitness, preparing for a race, or simply finding the right balance between exercise and everyday life. My goal is to help you build confidence, rediscover the joy of movement, and create a sustainable plan that works for you.
+              </p>
+              
+              <p className="leading-relaxed">
+                Together, we'll work step by step to achieve your goals with a personalized approach tailored to your unique needs. But most importantly, we'll focus on helping you feel strong, empowered, and excited about your fitness journey again.
+              </p>
+              
+              <p className="text-lg font-medium text-primary">
+                Let's find your balance and make your goals a reality!
+              </p>
+            </div>
+
+            <div className="mt-8">
+              <a href="#contact" className="cta-button cta-button-secondary inline-block">
+                Train with Me
+              </a>
+            </div>
           </div>
         </div>
       </div>

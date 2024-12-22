@@ -34,15 +34,14 @@ const Contact = () => {
         <div className="flex flex-wrap -mx-4 lg:justify-between">
           <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
             <div className="mb-12 max-w-[570px] lg:mb-0">
-              <span className="block mb-4 text-base font-semibold text-primary">
+              <span className="block mb-4 text-xl font-semibold text-primary">
                 Your Fitness Transformation
               </span>
               <h2 className="text-dark mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
                 START <span ref={highlightRef} className="highlight-text">TODAY</span>
               </h2>
               <p className="text-base leading-relaxed text-body-color mb-9">
-                Transform your fitness journey with our personalized 3-step approach. 
-                We're committed to helping you achieve your health and fitness goals.
+                Kickstart your fitness journey with our tailored 3-step approach. We're here to support you in achieving your health and fitness goals, one step at a time.
               </p>
               
               {/* Step 1 */}
@@ -52,10 +51,10 @@ const Contact = () => {
                 </div>
                 <div className="w-full">
                   <h4 className="mb-1 text-xl font-bold text-dark">
-                    Fill in the Form
+                    Fill Out the Form
                   </h4>
                   <p className="text-base text-body-color">
-                    Complete our comprehensive fitness assessment form
+                    Share your goals and get started.
                   </p>
                 </div>
               </div>
@@ -67,10 +66,10 @@ const Contact = () => {
                 </div>
                 <div className="w-full">
                   <h4 className="mb-1 text-xl font-bold text-dark">
-                    Plan Your FREE Intake
+                    Book Your FREE Intake
                   </h4>
                   <p className="text-base text-body-color">
-                    Schedule your complimentary consultation directly
+                    Schedule a session via Calendly with personal confirmation.
                   </p>
                 </div>
               </div>
@@ -82,10 +81,10 @@ const Contact = () => {
                 </div>
                 <div className="w-full">
                   <h4 className="mb-1 text-xl font-bold text-dark">
-                    Create Your Custom Plan
+                    Begin Your Custom Plan
                   </h4>
                   <p className="text-base text-body-color">
-                    Develop a personalized fitness strategy tailored to you
+                    Discuss our approach and create your plan together.
                   </p>
                 </div>
               </div>
