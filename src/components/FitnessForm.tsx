@@ -226,6 +226,7 @@ export function FitnessForm() {
               <h3 className="text-2xl font-semibold text-gray-900">You're All Set!</h3>
               <p className="text-gray-600">
                 Your Free Fitness Assessment is just one step away. Click below to schedule your call and take that first step towards your fitness goals!
+Everything up-to-date
               </p>
             </div>
             <CalendlyWidget 
