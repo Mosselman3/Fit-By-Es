@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import PricingCard from './components/PricingCard';
 import Contact from './components/Contact';
 import ScrollAnimation from './components/ScrollAnimation';
+import Approach from './components/Approach';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         </ScrollAnimation>
         <ScrollAnimation delay={0.3}>
           <TrainerProfile />
+        </ScrollAnimation>
+        <ScrollAnimation>
+          <Approach />
         </ScrollAnimation>
         <ScrollAnimation delay={0.4}>
           <PricingCard />
