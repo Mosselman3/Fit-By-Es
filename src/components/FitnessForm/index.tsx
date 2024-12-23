@@ -324,7 +324,7 @@ export function FitnessForm() {
                 type="button"
                 onClick={handlePrevious}
                 variant="outline" 
-                className="h-12 text-primary border-primary bg-primary/10 hover:bg-black hover:text-white hover:border-black w-full sm:w-auto min-w-[120px]"
+                className="h-12 text-[#1F2937] bg-primary/25 hover:bg-primary/40 hover:text-[#1F2937] w-full sm:w-auto min-w-[120px]"
               >
                 <div className="flex items-center justify-center gap-2">
                   <ArrowLeft className="w-4 h-4" />
@@ -339,7 +339,7 @@ export function FitnessForm() {
               <Button
                 variant="button"
                 disabled={!canProceed()}
-                className="h-12 bg-primary-dark shadow-md hover:bg-black text-white w-full sm:w-auto min-w-[120px] font-medium"
+                className="h-12 bg-primary-dark/90 shadow-md hover:bg-primary-dark text-[#1F2937] w-full sm:w-auto min-w-[120px] font-medium"
                 onClick={handleNext}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -352,7 +352,7 @@ export function FitnessForm() {
             {currentQuestion === questions.length - 1 ? (
               <Button 
                 variant="submit"
-                className="h-12 bg-primary-dark shadow-md hover:bg-black text-white w-full sm:w-auto min-w-[120px] font-medium"
+                className="h-12 bg-primary-dark/90 shadow-md hover:bg-primary-dark text-[#1F2937] w-full sm:w-auto min-w-[120px] font-medium"
                 disabled={!isContactValid() || isSubmitting}
               >
                 <div className="flex items-center justify-center gap-2">

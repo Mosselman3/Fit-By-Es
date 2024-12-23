@@ -30,6 +30,38 @@ const Contact = () => {
 
   return (
     <section className="relative z-10 overflow-hidden bg-white py-20 lg:py-[120px]">
+      <style jsx>{`
+        @keyframes highlight {
+          0% {
+            width: 0;
+            opacity: 0.5;
+          }
+          100% {
+            width: 100%;
+            opacity: 0.3;
+          }
+        }
+        .highlight-text {
+          position: relative;
+          padding: 0 4px;
+          z-index: 1;
+        }
+        .highlight-text::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 2px;
+          width: 0;
+          height: 60%;
+          background-color: #ffe44d;
+          z-index: -1;
+          opacity: 0;
+          transform-origin: left;
+        }
+        .highlight-text.animate::before {
+          animation: highlight 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        }
+      `}</style>
       <div className="container mx-auto">
         <div className="flex flex-wrap -mx-4 lg:justify-between">
           <div className="w-full px-4 lg:w-1/2 xl:w-6/12">

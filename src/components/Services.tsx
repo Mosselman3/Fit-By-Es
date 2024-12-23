@@ -1,21 +1,78 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const Service = () => {
+  const highlightRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (highlightRef.current) {
+      observer.observe(highlightRef.current);
+    }
+
+    return () => {
+      if (highlightRef.current) {
+        observer.unobserve(highlightRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className="pb-12 pt-20 lg:pb-[90px] lg:pt-[120px]">
+      <style jsx>{`
+        @keyframes highlight {
+          0% {
+            width: 0;
+            opacity: 0.5;
+          }
+          100% {
+            width: 100%;
+            opacity: 0.3;
+          }
+        }
+        .highlight-text {
+          position: relative;
+          padding: 0 4px;
+          z-index: 1;
+        }
+        .highlight-text::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 2px;
+          width: 0;
+          height: 60%;
+          background-color: #ffe44d;
+          z-index: -1;
+          opacity: 0;
+          transform-origin: left;
+        }
+        .highlight-text.animate::before {
+          animation: highlight 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        }
+      `}</style>
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
-              <span className="mb-2 block text-lg font-semibold text-primary">
-                Our Services
+            <div className="mx-auto mb-12 max-w-[640px] text-center lg:mb-20">
+              <span className="mb-2 block text-[1.2em] font-semibold text-primary">
+                My Services
               </span>
-              <h2 className="mb-3 text-3xl font-bold leading-[1.2] text-dark sm:text-4xl md:text-[40px]">
-                What We Offer
+              <h2 className="mb-3 text-[2.9em] font-bold leading-[1.2] text-dark">
+                Fitness that Works for{' '}
+                <span className="highlight-text" ref={highlightRef} data-aos="fade-up">
+                  You
+                </span>
               </h2>
-              <p className="text-base text-body-color ">
-                There are many variations of passages of Lorem Ipsum available
-                but the majority have suffered alteration in some form.
+              <p className="text-base text-body-color">
+                Programs focussed on steady progress and no quick fixes. Based on a 3-Pillar Framework for gradual results that are designed to last
               </p>
             </div>
           </div>
@@ -23,8 +80,8 @@ const Service = () => {
 
         <div className="-mx-4 flex flex-wrap">
           <ServiceCard
-            title="Weight Loss & Build Muscle"
-            details="Custom training programme and guidance."
+            title="Get Fit & Improve Health Programs"
+            details="Boost your energy and improve your health with personalized fitness programs tailored to your needs."
             icon={
               <svg
                 width="36"
@@ -56,11 +113,11 @@ const Service = () => {
                 />
               </svg>
             }
-            learnMoreLink="/weight-loss"
+            learnMoreLink="/get-fit"
           />
           <ServiceCard
             title="Sports Competition Coaching"
-            details="Custom Training Programme and Guidance for Your Sports Event."
+            details="Excel in swimming, running, cycling, or triathlon with expert coaching and tailored training plans."
             icon={
               <svg
                 width="36"
@@ -95,8 +152,8 @@ const Service = () => {
             learnMoreLink="/sports-coaching"
           />
           <ServiceCard
-            title="Postpartum Pregnancy Recovery Program"
-            details="Custom Training Program for Getting Back in Shape After pregnancy."
+            title="Weight Loss Programs"
+            details="Achieve sustainable weight loss with plans that combine fitness, nutrition, and motivation."
             icon={
               <svg
                 width="36"
@@ -106,14 +163,14 @@ const Service = () => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M18 31.5C25.4558 31.5 31.5 25.4558 31.5 18C31.5 10.5442 25.4558 4.5 18 4.5C10.5442 4.5 4.5 10.5442 4.5 18C4.5 25.4558 10.5442 31.5 18 31.5Z"
+                  d="M28.5 7.5H7.5C5.84315 7.5 4.5 8.84315 4.5 10.5V25.5C4.5 27.1569 5.84315 28.5 7.5 28.5H28.5C30.1569 28.5 31.5 27.1569 31.5 25.5V10.5C31.5 8.84315 30.1569 7.5 28.5 7.5Z"
                   stroke="white"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M18 12V18L22.5 20.25"
+                  d="M18 21C20.4853 21 22.5 18.9853 22.5 16.5C22.5 14.0147 20.4853 12 18 12C15.5147 12 13.5 14.0147 13.5 16.5C13.5 18.9853 15.5147 21 18 21Z"
                   stroke="white"
                   strokeWidth="2"
                   strokeLinecap="round"
@@ -121,12 +178,11 @@ const Service = () => {
                 />
               </svg>
             }
-            learnMoreLink="/postpartum-recovery"
+            learnMoreLink="/weight-loss"
           />
           <ServiceCard
-            title=" Download Training Schedules"
-            details="Get Your Training Scheme: 
-            Running (5-42Km), Swimming, and Triathlon."
+            title="Build Muscle Programs"
+            details="Build strength and sculpt your physique with programs focused on technique and progression."
             icon={
               <svg
                 width="36"
@@ -136,14 +192,14 @@ const Service = () => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M18 31.5C25.4558 31.5 31.5 25.4558 31.5 18C31.5 10.5442 25.4558 4.5 18 4.5C10.5442 4.5 4.5 10.5442 4.5 18C4.5 25.4558 10.5442 31.5 18 31.5Z"
+                  d="M28.5 7.5H7.5C5.84315 7.5 4.5 8.84315 4.5 10.5V25.5C4.5 27.1569 5.84315 28.5 7.5 28.5H28.5C30.1569 28.5 31.5 27.1569 31.5 25.5V10.5C31.5 8.84315 30.1569 7.5 28.5 7.5Z"
                   stroke="white"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M18 22.5C20.4853 22.5 22.5 20.4853 22.5 18C22.5 15.5147 20.4853 13.5 18 13.5C15.5147 13.5 13.5 15.5147 13.5 18C13.5 20.4853 15.5147 22.5 18 22.5Z"
+                  d="M13.5 16.5L18 21L22.5 16.5"
                   stroke="white"
                   strokeWidth="2"
                   strokeLinecap="round"
@@ -151,7 +207,43 @@ const Service = () => {
                 />
               </svg>
             }
-            learnMoreLink="/sport-event-schedules"
+            learnMoreLink="/build-muscle"
+          />
+          <ServiceCard
+            title="Download Training Schedules"
+            details="Directly download your Training Schemes for Running, Swimming, Cycling and Triathlon."
+            icon={
+              <svg
+                width="36"
+                height="36"
+                viewBox="0 0 36 36"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 3V24"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M9 15L18 24L27 15"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M3 30H33"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            }
+            learnMoreLink="/training-schedules"
           />
         </div>
       </div>
