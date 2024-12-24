@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 import { QuestionCard } from './QuestionCard';
@@ -299,6 +299,27 @@ export function FitnessForm() {
     return !!answers[currentQ.id] && !errors[currentQ.id];
   };
 
+  useEffect(() => {
+    if (isSubmitted) {
+      // Load Calendly CSS if not already loaded
+      if (!document.querySelector('link[href*="calendly"]')) {
+        const link = document.createElement('link');
+        link.href = 'https://assets.calendly.com/assets/external/widget.css';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+      }
+
+      // Load Calendly JS if not already loaded
+      if (!document.querySelector('script[src*="calendly"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://assets.calendly.com/assets/external/widget.js';
+        script.type = 'text/javascript';
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    }
+  }, [isSubmitted]);
+
   if (!currentQ) return null;
 
   if (isSubmitted) {
@@ -306,15 +327,24 @@ export function FitnessForm() {
       <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
         <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
         <p className="text-gray-700 mb-8">Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!</p>
-        <Button
-          onClick={() => setShowCalendly(true)}
-          variant="button"
-          className="w-full sm:w-auto min-w-[200px] h-12 text-base font-medium"
+        <div 
+          onClick={() => {
+            if (window.Calendly) {
+              window.Calendly.initPopupWidget({
+                url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
+              });
+            }
+          }}
         >
-          <span>Schedule Assessment</span>
-          <ArrowRight className="w-5 h-5 ml-2" />
-        </Button>
-        <CalendlyWidget isVisible={showCalendly} autoTrigger={true} />
+          <Button
+            type="button"
+            variant="button"
+            className="w-full sm:w-auto min-w-[200px] h-12 text-base font-medium"
+          >
+            <span>Schedule Assessment</span>
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+        </div>
       </div>
     );
   }
