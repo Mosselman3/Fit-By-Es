@@ -319,100 +319,98 @@ export function FitnessForm() {
 
   if (!currentQ) return null;
 
-  if (isSubmitted) {
-    return (
-      <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
-        <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
-        <p className="text-gray-700 mb-8">Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!</p>
-        <div className="flex justify-center px-4 sm:px-6">
-          <div
-            onClick={() => {
-              if (window.Calendly) {
-                window.Calendly.initPopupWidget({
-                  url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
-                });
-              }
-            }}
-          >
-            <Button
-              type="button"
-              className="h-12 bg-emerald-600/90 shadow-md hover:bg-emerald-600 text-[#1F2937] w-full sm:w-auto min-w-[200px] font-medium"
-            >
-              <div className="flex items-center justify-center gap-2">
-                <span className="font-medium">Schedule Assessment</span>
-                <ArrowRight className="w-4 h-4" />
-              </div>
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
-      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
-        <input type="hidden" name="form-name" value="Contact Form" />
-        
-        <Progress value={progress} isContact={isContactForm} />
-        
-        <div className="space-y-8">
-          <QuestionCard
-            question={currentQ}
-            answer={currentQ.type === 'contact' ? answers.contact : answers[currentQ.id]}
-            error={currentQ.type === 'contact' ? errors.contact : errors[currentQ.id]}
-            onAnswer={handleAnswer}
-            onContactInfoChange={currentQ.type === 'contact' ? 
-              ((field: string, value: string) => handleContactInfo(field as keyof ContactInfo, value)) : 
-              undefined}
-          />
-
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 pt-6 px-4 sm:px-6">
-            {currentQuestion > 0 ? (
+      {isSubmitted ? (
+        <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
+          <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
+          <p className="text-gray-700 mb-8">Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!</p>
+          <div className="flex justify-center px-4 sm:px-6">
+            <div
+              onClick={() => {
+                if (window.Calendly) {
+                  window.Calendly.initPopupWidget({
+                    url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
+                  });
+                }
+              }}
+            >
               <Button
                 type="button"
-                onClick={handlePrevious}
-                variant="outline" 
-                className="h-12 text-[#1F2937] bg-primary/25 hover:bg-primary/40 hover:text-[#1F2937] w-full sm:w-auto min-w-[120px]"
+                className="h-12 bg-emerald-600/90 shadow-md hover:bg-emerald-600 text-[#1F2937] w-full sm:w-auto min-w-[200px] font-medium"
               >
                 <div className="flex items-center justify-center gap-2">
-                  <ArrowLeft className="w-4 h-4" />
-                  <span className="font-medium">Back</span>
-                </div>
-              </Button>
-            ) : (
-              <div className="hidden sm:block" />
-            )}
-            
-            {currentQuestion < questions.length - 1 ? (
-              <Button
-                variant="button"
-                disabled={!canProceed()}
-                className="h-12 bg-primary-dark/90 shadow-md hover:bg-primary-dark text-[#1F2937] w-full sm:w-auto min-w-[120px] font-medium"
-                onClick={handleNext}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <span className="font-medium">Next</span>
+                  <span className="font-medium">Schedule Assessment</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </Button>
-            ) : null}
-
-            {currentQuestion === questions.length - 1 ? (
-              <Button 
-                variant="submit"
-                className="h-12 bg-primary-dark/90 shadow-md hover:bg-primary-dark text-[#1F2937] w-full sm:w-auto min-w-[120px] font-medium"
-                disabled={!isContactValid() || isSubmitting}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <span className="font-medium">{isSubmitting ? 'Submitting...' : 'Submit'}</span>
-                  <Send className="w-4 h-4" />
-                </div>
-              </Button>
-            ) : null}
+            </div>
           </div>
         </div>
-      </form>
+      ) : (
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+          <input type="hidden" name="form-name" value="Contact Form" />
+          
+          <Progress value={progress} isContact={isContactForm} />
+          
+          <div className="space-y-8">
+            <QuestionCard
+              question={currentQ}
+              answer={currentQ.type === 'contact' ? answers.contact : answers[currentQ.id]}
+              error={currentQ.type === 'contact' ? errors.contact : errors[currentQ.id]}
+              onAnswer={handleAnswer}
+              onContactInfoChange={currentQ.type === 'contact' ? 
+                ((field: string, value: string) => handleContactInfo(field as keyof ContactInfo, value)) : 
+                undefined}
+            />
+
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 pt-6 px-4 sm:px-6">
+              {currentQuestion > 0 ? (
+                <Button
+                  type="button"
+                  onClick={handlePrevious}
+                  variant="outline" 
+                  className="h-12 text-[#1F2937] bg-primary/25 hover:bg-primary/40 hover:text-[#1F2937] w-full sm:w-auto min-w-[120px]"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <ArrowLeft className="w-4 h-4" />
+                    <span className="font-medium">Back</span>
+                  </div>
+                </Button>
+              ) : (
+                <div className="hidden sm:block" />
+              )}
+              
+              {currentQuestion < questions.length - 1 ? (
+                <Button
+                  variant="button"
+                  disabled={!canProceed()}
+                  className="h-12 bg-primary-dark/90 shadow-md hover:bg-primary-dark text-[#1F2937] w-full sm:w-auto min-w-[120px] font-medium"
+                  onClick={handleNext}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="font-medium">Next</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </Button>
+              ) : null}
+
+              {currentQuestion === questions.length - 1 ? (
+                <Button 
+                  variant="submit"
+                  className="h-12 bg-primary-dark/90 shadow-md hover:bg-primary-dark text-[#1F2937] w-full sm:w-auto min-w-[120px] font-medium"
+                  disabled={!isContactValid() || isSubmitting}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="font-medium">{isSubmitting ? 'Submitting...' : 'Submit'}</span>
+                    <Send className="w-4 h-4" />
+                  </div>
+                </Button>
+              ) : null}
+            </div>
+          </div>
+        </form>
+      )}
     </>
   );
 }
