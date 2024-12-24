@@ -324,7 +324,7 @@ export function FitnessForm() {
       <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
         <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
         <p className="text-gray-700 mb-8">Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!</p>
-        <div className="flex justify-center">
+        <div className="flex justify-center px-4 sm:px-6">
           <div
             onClick={() => {
               if (window.Calendly) {
@@ -336,10 +336,12 @@ export function FitnessForm() {
           >
             <Button
               type="button"
-              className="h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 rounded-md transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto min-w-[200px]"
+              className="h-12 bg-emerald-600/90 shadow-md hover:bg-emerald-600 text-[#1F2937] w-full sm:w-auto min-w-[200px] font-medium"
             >
-              <span>Schedule Assessment</span>
-              <ArrowRight className="w-4 h-4" />
+              <div className="flex items-center justify-center gap-2">
+                <span className="font-medium">Schedule Assessment</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
             </Button>
           </div>
         </div>
