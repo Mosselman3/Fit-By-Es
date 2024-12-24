@@ -185,13 +185,24 @@ export function FitnessForm() {
 
     setErrors((prev: ErrorType) => ({
       ...prev,
-      contact: { ...(prev.contact as Record<string, string> || {}), [field]: error }
+      contact: { 
+        ...(prev.contact as Record<string, string> || {}), 
+        [field]: error 
+      }
     }));
 
-    setAnswers((prev: AnswerType) => ({
-      ...prev,
-      contact: { ...(prev.contact || {} as ContactInfo), [field]: value }
-    }));
+    setAnswers((prev: AnswerType) => {
+      const prevContact = (prev.contact || {}) as ContactInfo;
+      return {
+        ...prev,
+        contact: {
+          ...prevContact,
+          [field]: value
+        }
+      };
+    });
+
+    console.log('Updated contact field:', field, 'with value:', value);
   };
 
   const handleNext = () => {
