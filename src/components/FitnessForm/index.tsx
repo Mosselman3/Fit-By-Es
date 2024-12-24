@@ -335,14 +335,17 @@ export function FitnessForm() {
               });
             }
           }}
+          className="flex justify-center"
         >
           <Button
             type="button"
             variant="button"
-            className="w-full sm:w-auto min-w-[200px] h-12 text-base font-medium"
+            className="h-12 bg-emerald-600 hover:bg-emerald-700 text-white w-full sm:w-auto min-w-[200px] transition-all duration-300"
           >
-            <span>Schedule Assessment</span>
-            <ArrowRight className="w-5 h-5 ml-2" />
+            <div className="flex items-center justify-center gap-2">
+              <span className="font-medium">Schedule Assessment</span>
+              <ArrowRight className="w-4 h-4" />
+            </div>
           </Button>
         </div>
       </div>
