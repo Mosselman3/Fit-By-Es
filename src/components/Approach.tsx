@@ -38,7 +38,7 @@ const Approach = () => {
           {[1, 2, 3].map((number, index) => (
             <motion.div
               key={number}
-              className="bg-white p-8 rounded-2xl shadow-md relative transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]"
+              className="bg-white p-8 rounded-2xl shadow-md relative transform transition-all duration-500 ease-in-out hover:shadow-2xl hover:-translate-y-3 hover:scale-[1.05]"
               variants={cardVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
@@ -58,45 +58,61 @@ const Approach = () => {
                     <>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Tailored workout plans for each client's goals and fitness level.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Define your workout habits and current fitness level</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Customized nutrition advice to match preferences and objectives.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Set clear and attainable goals</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Regular plan updates to ensure continuous progress.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Tailor workout plans that fit into your daily routine</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
+                        <span className="text-body-color text-lg leading-relaxed">Nutrition advice to enhance physical performance</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
+                        <span className="text-body-color text-lg leading-relaxed">Improving the plan on the go</span>
                       </li>
                     </>
                   ) : number === 2 ? (
                     <>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Build strong relationships through consistent check-ins.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Consistent check-ins to build a strong relationship</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Maintain regular communication to provide support and guidance.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Daily communication for questions to provide support and guidance</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Foster motivation and accountability with a supportive community.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Improve and maintain your motivation and accountability</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
+                        <span className="text-body-color text-lg leading-relaxed">Connecting you with a supportive community</span>
                       </li>
                     </>
                   ) : (
                     <>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Track goals and monitor progress with regular updates.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Clear expectations that can be achieved and measured</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Use reminders to keep clients on schedule.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Track the set goals and monitor progress</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
-                        <span className="text-body-color text-lg leading-relaxed">Provide habit coaching for consistency and long-term success.</span>
+                        <span className="text-body-color text-lg leading-relaxed">Use of technology to keep you on schedule</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-primary mr-3 font-bold text-xl leading-none mt-1">•</span>
+                        <span className="text-body-color text-lg leading-relaxed">Creating habits to ensure long-term success</span>
                       </li>
                     </>
                   )}
