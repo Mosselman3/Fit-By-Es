@@ -337,7 +337,7 @@ export function FitnessForm() {
             >
               <Button
                 type="button"
-                className="h-12 bg-primary-dark/90 shadow-md hover:bg-primary-dark text-[#1F2937] w-full sm:w-auto min-w-[200px] font-medium"
+                className="h-12 bg-emerald-600/90 shadow-md hover:bg-emerald-600 text-[#1F2937] w-full sm:w-auto min-w-[200px] font-medium"
               >
                 <div className="flex items-center justify-center gap-2">
                   <span className="font-medium">Schedule Assessment</span>
