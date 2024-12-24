@@ -5,7 +5,6 @@ import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 import { QuestionCard } from './QuestionCard';
 import { ArrowLeft, ArrowRight, Send } from 'lucide-react';
-import CalendlyWidget from '../CalendlyWidget';
 
 interface ContactInfo {
   title: string;
@@ -60,7 +59,6 @@ export function FitnessForm() {
   const [errors, setErrors] = useState<ErrorType>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showCalendly, setShowCalendly] = useState(false);
   const questions: Question[] = [
     {
       id: 1,
@@ -273,7 +271,6 @@ export function FitnessForm() {
       }
       
       setIsSubmitted(true);
-      setShowCalendly(false);
       setAnswers({});
     } catch (error) {
       console.error("Form submission error:", error);
@@ -327,26 +324,24 @@ export function FitnessForm() {
       <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
         <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
         <p className="text-gray-700 mb-8">Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!</p>
-        <div 
-          onClick={() => {
-            if (window.Calendly) {
-              window.Calendly.initPopupWidget({
-                url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
-              });
-            }
-          }}
-          className="flex justify-center"
-        >
-          <Button
-            type="button"
-            variant="button"
-            className="h-12 bg-emerald-600 hover:bg-emerald-700 text-white w-full sm:w-auto min-w-[200px] transition-all duration-300"
+        <div className="flex justify-center">
+          <div
+            onClick={() => {
+              if (window.Calendly) {
+                window.Calendly.initPopupWidget({
+                  url: 'https://calendly.com/sebastiaan-mosselman/fitness-assessment'
+                });
+              }
+            }}
           >
-            <div className="flex items-center justify-center gap-2">
-              <span className="font-medium">Schedule Assessment</span>
+            <Button
+              type="button"
+              className="h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 rounded-md transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto min-w-[200px]"
+            >
+              <span>Schedule Assessment</span>
               <ArrowRight className="w-4 h-4" />
-            </div>
-          </Button>
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -416,7 +411,6 @@ export function FitnessForm() {
           </div>
         </div>
       </form>
-      <CalendlyWidget isVisible={showCalendly} />
     </>
   );
 }
