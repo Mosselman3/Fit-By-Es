@@ -303,10 +303,18 @@ export function FitnessForm() {
 
   if (isSubmitted) {
     return (
-      <div className="text-center p-8 bg-white rounded-lg shadow-md">
+      <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
         <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
-        <p className="text-gray-700 mb-6">Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!</p>
-        <CalendlyWidget isVisible={true} />
+        <p className="text-gray-700 mb-8">Just one more step to book your Free Fitness Assessment. Click below to schedule your call and take that first step!</p>
+        <Button
+          onClick={() => setShowCalendly(true)}
+          variant="button"
+          className="w-full sm:w-auto min-w-[200px] h-12 text-base font-medium"
+        >
+          <span>Schedule Assessment</span>
+          <ArrowRight className="w-5 h-5 ml-2" />
+        </Button>
+        <CalendlyWidget isVisible={showCalendly} autoTrigger={true} />
       </div>
     );
   }
