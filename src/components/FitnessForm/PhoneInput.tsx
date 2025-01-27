@@ -3,13 +3,13 @@ import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import { cn } from '../../lib/utils';
 
-interface PhoneInputProps {
+interface CustomPhoneInputProps {
   value: string;
   onChange: (value: string) => void;
   error?: string;
 }
 
-export function PhoneInput({ value, onChange, error }: PhoneInputProps) {
+export function CustomPhoneInput({ value, onChange, error }: CustomPhoneInputProps) {
   return (
     <div className="relative">
       <PhoneInput

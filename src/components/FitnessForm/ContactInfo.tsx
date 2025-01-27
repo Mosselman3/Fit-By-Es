@@ -1,7 +1,7 @@
 'use client';
 
 import { Input } from '../ui/input';
-import { PhoneInput } from './PhoneInput';
+import { CustomPhoneInput } from './PhoneInput';
 import { Textarea } from '../ui/textarea';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { Label } from '../ui/label';
@@ -92,14 +92,11 @@ export function ContactInfo({ values, errors, onChange }: ContactInfoProps) {
           )}
         </div>
         <div>
-          <PhoneInput
+          <CustomPhoneInput
             value={values.phone || ''}
             onChange={(value) => onChange('phone', value || '')}
-            className="h-12 text-base text-gray-800 w-full px-4 border rounded-md"
+            error={errors?.phone}
           />
-          {errors?.phone && (
-            <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
-          )}
         </div>
       </div>
 
