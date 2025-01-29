@@ -21,7 +21,7 @@ export default {
         'body-color': '#4A4A4A',  // Dark gray
         'dark': '#2C3E50',        // Dark blue-gray
         'stroke': '#D3D3D3',      // Light gray
-        'background': '#F5F5F5',  // Very light gray
+        'background': '#FFFFFF',  // White
       },
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
