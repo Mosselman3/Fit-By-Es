@@ -55,12 +55,12 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
         const fullName = `${firstName} ${lastName}`.trim();
         
         // Use the complete phone number as provided by the input
-        const phoneNumber = prefillData?.phone || '';
+        const phone_number = prefillData?.phone || '';
         
         console.log('Calendly Prefill Data:', {
           name: fullName,
           email: prefillData?.email,
-          phoneNumber,
+          phone_number,
           customAnswers: {
             a1: answers?.[1] || '',
             a2: answers?.[2] || '',
@@ -74,7 +74,7 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
           prefill: {
             name: fullName,
             email: prefillData?.email,
-            phoneNumber,
+            phone_number,
             customAnswers: {
               a1: answers?.[1] || '',
               a2: answers?.[2] || '',
