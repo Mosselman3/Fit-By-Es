@@ -8,7 +8,6 @@ import { ArrowLeft, ArrowRight, Send } from 'lucide-react';
 import CalendlyWidget from '../CalendlyWidget';
 
 interface ContactInfo {
-  title: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -259,7 +258,6 @@ export function FitnessForm({ prefilledAnswer, startFromQuestion }: FitnessFormP
     const contact = answers.contact as ContactInfo;
     const contactErrors: Record<string, string> = {};
     
-    if (!contact?.title) contactErrors.title = 'This field is required';
     if (!contact?.firstName) contactErrors.firstName = 'This field is required';
     if (!contact?.lastName) contactErrors.lastName = 'This field is required';
     if (!contact?.email) contactErrors.email = 'This field is required';
@@ -286,7 +284,6 @@ export function FitnessForm({ prefilledAnswer, startFromQuestion }: FitnessFormP
         'age-range': answers[5]?.toString() || '',
         'name': `${contact?.firstName || ''} ${contact?.lastName || ''}`.trim(),
         'goals': contact?.message || '',
-        'title': contact?.title || '',
         'first-name': contact?.firstName || '',
         'last-name': contact?.lastName || '',
         'email': contact?.email || '',
@@ -324,8 +321,8 @@ export function FitnessForm({ prefilledAnswer, startFromQuestion }: FitnessFormP
   const isContactValid = () => {
     const contact = answers.contact || {};
     const contactErrors = errors.contact as Record<string, string> || {};
-    return contact.title && contact.firstName && contact.lastName && contact.email && contact.phone &&
-           !contactErrors.title && !contactErrors.firstName && !contactErrors.lastName && !contactErrors.email && !contactErrors.phone;
+    return contact.firstName && contact.lastName && contact.email && contact.phone &&
+           !contactErrors.firstName && !contactErrors.lastName && !contactErrors.email && !contactErrors.phone;
   };
 
   const canProceed = () => {
