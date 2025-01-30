@@ -56,11 +56,12 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
         
         // Format phone number for Calendly
         // The phone input gives us a format like: "+31611366160"
-        // We need to split it into country code and number
+        // For NL numbers, we want countryCode: "+31" and phoneNumber: "611366160"
         const phone = prefillData?.phone || '';
-        const phoneMatch = phone.match(/^\+(\d+)(\d+)$/);
-        const countryCode = phoneMatch ? phoneMatch[1] : '';
-        const phoneNumber = phoneMatch ? phoneMatch[2] : '';
+        // Remove the '+' and extract country code (31 for NL) and the rest as phone number
+        const cleanPhone = phone.replace(/^\+/, '');
+        const countryCode = cleanPhone.startsWith('31') ? '+31' : '';
+        const phoneNumber = cleanPhone.startsWith('31') ? cleanPhone.slice(2) : cleanPhone;
         
         console.log('Calendly Prefill Data:', {
           name: fullName,
