@@ -20,20 +20,29 @@ const TrainerProfile = () => {
 
   return (
     <section id="trainer" className="bg-[#F3F4F6] py-12 md:py-20">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container mx-auto px-0 md:px-6 lg:px-8">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-12 md:mb-16 text-dark"
+          className="text-4xl md:text-5xl font-bold text-center mb-4 text-dark"
         >
           Meet Your Trainer
         </motion.h2>
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-2xl md:text-3xl text-center mb-12 md:mb-16 text-dark/80 font-[GT-Walsheim-Framer-Medium]"
+        >
+          Estrella Wierikx
+        </motion.h3>
 
         <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-12">
           {/* Image Section - Full width on mobile, left side on desktop */}
-          <div className="w-full md:w-1/2 mb-8 md:mb-0 px-0 md:px-4">
+          <div className="w-screen md:w-1/2 mb-8 md:mb-0 md:px-4">
             <FadeInSection delay={200}>
               <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] md:rounded-2xl overflow-hidden">
                 <motion.img
