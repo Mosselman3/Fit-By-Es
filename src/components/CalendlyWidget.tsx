@@ -54,8 +54,10 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
         const lastName = prefillData?.lastName || '';
         const fullName = `${firstName} ${lastName}`.trim();
         
-        // Use the complete phone number as provided by the input
-        const phone_number = prefillData?.phone || '';
+        // Format phone number for Calendly
+        // Remove any spaces and ensure it starts with a plus
+        const rawPhone = prefillData?.phone || '';
+        const phone_number = rawPhone.replace(/\s+/g, '');
         
         console.log('Calendly Prefill Data:', {
           name: fullName,
