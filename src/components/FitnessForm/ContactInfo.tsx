@@ -3,12 +3,10 @@
 import { Input } from '../ui/input';
 import { CustomPhoneInput } from './PhoneInput';
 import { Textarea } from '../ui/textarea';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { Label } from '../ui/label';
 
 interface ContactInfoProps {
   values: {
-    title?: string;
     firstName?: string;
     lastName?: string;
     email?: string;
@@ -22,26 +20,6 @@ interface ContactInfoProps {
 export function ContactInfo({ values, errors, onChange }: ContactInfoProps) {
   return (
     <div className="space-y-4 w-full max-w-3xl mx-auto">
-      <div className="pl-4">
-        <RadioGroup
-          value={values.title}
-          onValueChange={(value) => onChange('title', value)}
-          className="flex justify-start items-center w-full"
-        >
-          <div className="inline-flex items-center">
-            <RadioGroupItem value="mr" id="title-mr" className="mr-2" />
-            <Label htmlFor="title-mr" className="cursor-pointer mr-8">Mr.</Label>
-          </div>
-          <div className="inline-flex items-center">
-            <RadioGroupItem value="mrs" id="title-mrs" className="mr-2" />
-            <Label htmlFor="title-mrs" className="cursor-pointer">Mrs.</Label>
-          </div>
-        </RadioGroup>
-        {errors?.title && (
-          <p className="text-red-500 text-sm mt-1">{errors.title}</p>
-        )}
-      </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
           <Input

@@ -139,7 +139,8 @@ export function FitnessForm({ prefilledAnswer, startFromQuestion }: FitnessFormP
       required: true,
       options: [
         { value: 'male', label: 'Male', icon: '🏃' },
-        { value: 'female', label: 'Female', icon: '🏃‍♀️' }
+        { value: 'female', label: 'Female', icon: '🏃‍♀️' },
+        { value: 'non-binary', label: 'Non-binary', icon: '⚧' }
       ]
     },
     {
