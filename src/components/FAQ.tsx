@@ -34,7 +34,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "How much does online coaching cost?",
-    answer: "Pricing varies based on the package you choose. Get in touch for more details on which plan fits your needs."
+    answer: "The price depends on your preferences and which FitByEs package you choose. Packages start from € 75 per month. I'm happy to tell more, please get in touch for more details on which plan fits your needs."
   },
   {
     question: "How soon will I see results?",
