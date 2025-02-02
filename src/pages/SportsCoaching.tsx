@@ -60,7 +60,7 @@ const SportsCoaching = () => {
               <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
                 <div className="w-full lg:w-1/2 h-[400px] md:h-[500px] lg:h-[600px] lg:rounded-2xl overflow-hidden">
                   <img
-                    src="/images/trainer-profile-photo.jpg"
+                    src="/images/sports-coaching-photo.jpg"
                     alt="Sports Competition Training"
                     className="w-full h-full object-cover"
                   />

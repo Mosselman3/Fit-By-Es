@@ -51,7 +51,7 @@ const TrainerProfile = () => {
                   muted
                   loop
                   playsInline
-                  poster="/images/trainer-profile-photo.jpg"
+                  poster="/images/sports-coaching-photo.jpg"
                 >
                   <source src="/videos/trainer-profile.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
