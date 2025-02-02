@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instagram, Dumbbell } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { contactSectionId } from './Contact';
 
@@ -72,8 +72,11 @@ const Footer = () => {
           {/* Brand and Links */}
           <div className="flex flex-col items-center md:items-start">
             <Link to="/" onClick={handleLogoClick} className="flex items-center text-xl font-semibold mb-6">
-              <Dumbbell className="w-6 h-6 mr-2 text-[#5C6AC4]" />
-              FitByEs
+              <img 
+                src="/images/FitByEs Logo.png" 
+                alt="FitByEs Logo" 
+                className="h-8 w-auto brightness-0 invert"
+              />
             </Link>
             <div className="grid grid-cols-2 gap-x-12 gap-y-6">
               <nav className="flex flex-col space-y-3">

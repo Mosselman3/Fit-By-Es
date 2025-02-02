@@ -13,6 +13,10 @@ const faqData: FAQItem[] = [
     answer: "I offer personalized coaching that's truly tailored to you. Whether you're training for a race, getting back in shape, or just looking to get stronger, I create a plan that works for your unique goals. You'll get expert guidance, flexibility, and the support you need for lasting results."
   },
   {
+    question: "How much does online coaching cost?",
+    answer: "The price depends on your preferences and which FitByEs package you choose. Packages start from € 75 per month. I'm happy to tell more, please get in touch for more details on which plan fits your needs."
+  },
+  {
     question: "How often will we communicate during training?",
     answer: "Communication depends on what works best for you. We'll find the right balance to keep you motivated and on track."
   },
@@ -31,10 +35,6 @@ const faqData: FAQItem[] = [
   {
     question: "How do you ensure proper form and technique?",
     answer: "You'll get video instructions and feedback. If needed, we can also do real-time check-ins to ensure you're performing exercises correctly."
-  },
-  {
-    question: "How much does online coaching cost?",
-    answer: "The price depends on your preferences and which FitByEs package you choose. Packages start from € 75 per month. I'm happy to tell more, please get in touch for more details on which plan fits your needs."
   },
   {
     question: "How soon will I see results?",

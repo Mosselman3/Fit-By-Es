@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Dumbbell, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { contactSectionId } from './Contact';
 
 const Header = () => {
@@ -82,8 +82,11 @@ const Header = () => {
       <div className="container mx-auto px-4 h-full">
         <div className="relative flex items-center justify-between h-full">
           <Link to="/" onClick={handleLogoClick} className="text-lg font-semibold text-dark hover:text-dark/80 flex items-center">
-            <Dumbbell className="w-6 h-6 mr-2 text-[#5C6AC4]" />
-            FitByEs
+            <img 
+              src="/images/FitByEs Logo.png" 
+              alt="FitByEs Logo" 
+              className="h-8 w-auto"
+            />
           </Link>
 
           {/* Mobile Menu Button */}
