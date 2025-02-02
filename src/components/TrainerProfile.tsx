@@ -40,19 +40,22 @@ const TrainerProfile = () => {
           Estrella Wierikx
         </motion.h3>
 
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-12">
-          {/* Image Section - Full width on mobile, left side on desktop */}
-          <div className="w-screen md:w-1/2 mb-8 md:mb-0 md:px-4">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-12 -mx-0">
+          {/* Video Section - Full width on mobile, left side on desktop */}
+          <div className="w-screen md:w-1/2 mb-8 md:mb-0">
             <FadeInSection delay={200}>
-              <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] md:rounded-2xl overflow-hidden">
-                <motion.img
-                  src="/images/trainer-profile-photo.jpg"
-                  alt="Personal Trainer"
-                  className="w-full h-full object-cover"
-                  initial={{ scale: 1.2, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                />
+              <div className="relative w-full aspect-[4/5] md:aspect-[3/4] md:rounded-2xl overflow-hidden">
+                <video
+                  className="absolute inset-0 w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster="/images/trainer-profile-photo.jpg"
+                >
+                  <source src="/videos/trainer-profile.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </FadeInSection>
           </div>
